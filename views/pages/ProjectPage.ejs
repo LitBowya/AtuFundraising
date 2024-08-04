@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head.ejs") %>
+
+  <body>
+    <%- include('../partials/nav.ejs') %>
+    <%- include('../partials/header.ejs') %>
+
+
+
+    <div class="container my-3">
+      <div class="row">
+        <!-- Filter Button for Smaller Screens -->
+        <div class="d-lg-none mb-3">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+            Filters
+          </button>
+        </div>
+
+        <!-- Filter Sidebar for Larger Screens -->
+        <div class="col-lg-3 d-none d-lg-block">
+          <form id="filter-form" class="filter-form">
+
+            <div class="mb-3">
+              <h5>Faculties</h5>
+              <div id="faculties-checkboxes"></div>
+            </div>
+
+            <div class="mb-3">
+              <h5>Departments</h5>
+              <div id="departments-checkboxes"></div>
+            </div>
+
+            <div class="mb-3">
+              <h5>Timeline</h5>
+              <div id="timeline-checkboxes"></div>
+            </div>
+
+            <div class="mb-3">
+              <input type="number" name="minBudget" placeholder="Min Budget" class="form-control mb-3" />
+              <input type="number" name="maxBudget" placeholder="Max Budget" class="form-control mb-3" />
+            </div>
+
+            <div class="mb-3">
+              <select name="sortBy" class="form-select">
+                <option value="">Sort By</option>
+                <option value="title">Title</option>
+                <option value="budget">Budget</option>
+                <option value="timeline">Timeline</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <select name="order" class="form-select">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+          </form>
+        </div>
+
+        <!-- Project Cards -->
+        <div class="col-lg-9">
+            <header class="py-3">
+                <h1>Project Page</h1>
+            </header>
+          <div class="row g-4">
+            <% if (projects && projects.length > 0) { %>
+              <% projects.forEach(project => { %>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                  <div class="card projects__card">
+                    <img
+                      src="<%= project.images && project.images.length > 0 ? project.images[0] : '' %>"
+                      class="card-img-top"
+                      alt="<%= project.title %>"
+                    />
+
+                    <div class="card-body">
+                      <h5 class="card-title"><%= project.title %></h5>
+                      <p class="card-text">
+                        <span>Faculty: </span><%= project.faculty %>
+                      </p>
+                      <p class="card-text">
+                        <span>Department: </span><%= project.department %>
+                      </p>
+                      <p class="card-text">
+                        <span>Budget: GHS </span><%= project.budget %>
+                      </p>
+                      <p class="card-text">
+                        <span>Timeline: </span><%= project.timeline %>
+                      </p>
+
+                      <% if (project.amountLeft > 0) { %>
+                      <p class="card-text">
+                        <span>Amount Left: GHS </span><%= project.amountLeft %>
+                      </p>
+                      <a href="/projects/<%= project._id %>" class="btn btn-primary">View Project</a>
+                      <% } else { %>
+                      <p class="card-text">Budget has been met</p>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <p>No projects found.</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Modal for Smaller Screens -->
+    <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="filterModalLabel">Filters</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="filter-form-modal" class="filter-form">
+              <input type="text" name="title" placeholder="Title" class="form-control mb-3" />
+
+              <div class="mb-3">
+                <h5>Faculties</h5>
+                <div id="faculties-checkboxes-modal"></div>
+              </div>
+
+              <div class="mb-3">
+                <h5>Departments</h5>
+                <div id="departments-checkboxes-modal"></div>
+              </div>
+
+              <div class="mb-3">
+                <h5>Timeline</h5>
+                <div id="timeline-checkboxes-modal"></div>
+              </div>
+
+              <div class="mb-3">
+                <input type="number" name="minBudget" placeholder="Min Budget" class="form-control mb-3" />
+                <input type="number" name="maxBudget" placeholder="Max Budget" class="form-control mb-3" />
+              </div>
+
+              <div class="mb-3">
+                <select name="sortBy" class="form-select">
+                  <option value="">Sort By</option>
+                  <option value="title">Title</option>
+                  <option value="budget">Budget</option>
+                  <option value="timeline">Timeline</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <select name="order" class="form-select">
+                  <option value="asc">Ascending</option>
+                  <option value="desc">Descending</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Apply Filters</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById('filter-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const params = new URLSearchParams(new FormData(this)).toString();
+        window.location.href = '/projects?' + params;
+      });
+
+      document.getElementById('filter-form-modal').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const params = new URLSearchParams(new FormData(this)).toString();
+        window.location.href = '/projects?' + params;
+      });
+
+      // Fetch filter options dynamically
+      async function fetchFilterOptions() {
+        try {
+          const response = await fetch('/projects/filters');
+          const data = await response.json();
+          populateCheckboxes(data.faculties, 'faculties-checkboxes');
+          populateCheckboxes(data.departments, 'departments-checkboxes');
+          populateCheckboxes(data.timelines, 'timeline-checkboxes');
+          populateCheckboxes(data.faculties, 'faculties-checkboxes-modal');
+          populateCheckboxes(data.departments, 'departments-checkboxes-modal');
+          populateCheckboxes(data.timelines, 'timeline-checkboxes-modal');
+        } catch (error) {
+          console.error('Error fetching filter options:', error);
+        }
+      }
+
+      function populateCheckboxes(items, elementId) {
+        const container = document.getElementById(elementId);
+        container.innerHTML = items.map(item => `
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="${elementId.replace('-checkboxes', '')}" value="${item}" id="${elementId}-${item}">
+            <label class="form-check-label" for="${elementId}-${item}">
+              ${item}
+            </label>
+          </div>
+        `).join('');
+      }
+
+      fetchFilterOptions();
+    </script>
+  </body>
+</html>

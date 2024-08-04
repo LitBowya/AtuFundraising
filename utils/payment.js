@@ -1,13 +1,11 @@
-// utils/paystack.js
-import axios from "axios"
-
-const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
+import axios from "axios";
 
 const paystack = axios.create({
-  baseURL: 'https://api.paystack.co',
+  baseURL: "https://api.paystack.co",
   headers: {
-    Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`
-  }
+    Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+    "Content-Type": "application/json",
+  },
 });
 
-export default paystack
+export default paystack;

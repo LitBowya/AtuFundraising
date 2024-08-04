@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head.ejs") %>
+  <body>
+    <%- include("../partials/nav.ejs") %>
+    <div class="login__container">
+      <div class="login__container-form">
+        <h2>Login</h2>
+      <form id="loginForm" action="/users/login" method="POST">
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="login__button">
+          <button type="submit">Login</button>
+        </div>
+      </form>
+      <div class="div">
+        <span>Already Have An Account??</span>
+        <a href="/register">Register</a>
+      <div id="errorMessage" style="display: none;"></div>
+      </div>
+      </div>
+    </div>
+
+    <script>
+      // Function to log errors to the console
+      function logError(message, error) {
+        console.error(message, error);
+        // You can also use Winston for server-side logging if needed
+      }
+
+      const loginForm = document.getElementById("loginForm");
+      const errorMessage = document.getElementById("errorMessage");
+
+      loginForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        console.log("Logging in with email:", email);
+        console.log("Password:", password);
+
+        try {
+          const response = await axios.post("/users/login", {
+            email: email,
+            password: password,
+          });
+
+          const data = response.data;
+
+          if (data.success) {
+            // Redirect or navigate to the homepage or dashboard upon successful login
+            window.location.href = "/";
+          } else {
+            errorMessage.textContent = data.message;
+            errorMessage.style.display = "block";
+          }
+        } catch (error) {
+          const errorMessageText = "Error logging in. Please try again.";
+          logError(errorMessageText, error);
+          errorMessage.textContent = errorMessageText;
+          errorMessage.style.display = "block";
+        }
+      });
+    </script>
+  </body>
+</html>

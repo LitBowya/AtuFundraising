@@ -47,20 +47,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    profilePicture: {
+      type: String,
+      required: true,
+    },
     isAlumni: { type: Boolean, default: false },
     alumniDetails: { type: alumniSchema, default: null },
-    socialMediaHandles: {
-      twitter: String,
-      linkedin: String,
-      facebook: String,
-    },
-    privacySettings: {
-      showEmail: Boolean,
-      showPhoneNumber: Boolean,
-      showAddress: Boolean,
-      showProfilePicture: Boolean,
-      showName: Boolean,
-    },
   },
   {
     timestamps: true,

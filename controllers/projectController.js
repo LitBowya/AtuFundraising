@@ -1,22 +1,55 @@
-// controllers/projectController.js
 import Project from "../models/projectModel.js";
 import asyncHandler from "../middleware/asyncHandler.js";
+import logger from "../logger.js";
 
 const getAllProjects = asyncHandler(async (req, res) => {
   try {
-    const projects = await Project.find({});
-    // res.render("projects", { projects });
-    if(!projects){
-      res.status(200).json({message: "No projects available"})
+    const { title, faculty, department, minBudget, maxBudget, sortBy, order } =
+      req.query;
+    let query = {};
+
+    if (title) query.title = { $regex: title, $options: "i" };
+    if (faculty) query.faculty = faculty;
+    if (department) query.department = department;
+    if (minBudget) query.budget = { ...query.budget, $gte: Number(minBudget) };
+    if (maxBudget) query.budget = { ...query.budget, $lte: Number(maxBudget) };
+
+    let sortOptions = {};
+    if (sortBy) {
+      const sortOrder = order === "desc" ? -1 : 1;
+      sortOptions[sortBy] = sortOrder;
     }
-    res.status(200).json({
-      status: "success",
-      message: "Projects fetched successfully",
-      data: projects,
+
+    const projects = await Project.find(query).sort(sortOptions);
+    if (!projects) {
+      logger.warn("No projects available");
+      return res.status(200).json({ message: "No projects available" });
+    }
+
+    res.render("pages/ProjectPage", {
+      projects,
+      title: "Projects",
     });
   } catch (error) {
-    console.error("Error fetching projects:", error);
+    logger.error("Error fetching projects:", error);
     res.status(500).json({ message: "Error fetching projects" });
+  }
+});
+
+const getFilterOptions = asyncHandler(async (req, res) => {
+  try {
+    const faculties = await Project.distinct("faculty");
+    const departments = await Project.distinct("department");
+    const timelines = await Project.distinct("timeline");
+
+    res.status(200).json({
+      faculties,
+      departments,
+      timelines,
+    });
+  } catch (error) {
+    logger.error("Error fetching filter options:", error);
+    res.status(500).json({ message: "Error fetching filter options" });
   }
 });
 
@@ -24,42 +57,53 @@ const getProjectDetails = asyncHandler(async (req, res) => {
   try {
     const projectId = req.params.id;
     const project = await Project.findById(projectId);
-    res.render("projectDetail", { project });
-    res.status(200).json({
-      status: "success",
-      message: "Project details fetched successfully",
-      data: project,
+    if (!project) {
+      logger.warn(`Project with ID ${projectId} not found`);
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    res.render("pages/ProjectDetailsPage", {
+      title: "Project Details",
+      project: project,
     });
   } catch (error) {
-    console.error("Error fetching project details:", error);
-    res.status(500).send("Error fetching project details");
+    logger.error("Error fetching project details:", error);
+    res.status(500).json({ message: "Error fetching project details" });
   }
 });
 
 const createProject = asyncHandler(async (req, res) => {
   try {
-    const { title, description, goals, timeline, budget, progress, faculty, department } = req.body;
+    const { title, description, goals, timeline, budget, faculty, department } =
+      req.body;
+
+    // Extracting the paths of uploaded images
+    const images = req.files.map((file) => `/${file.path}`);
+
     const newProject = new Project({
       title,
       description,
       goals,
       timeline,
       budget,
-      progress,
+      progress: 0, // Initialize progress to 0%
+      amountLeft: budget, // Initialize amountLeft to budget
       faculty,
       department,
+      images,
     });
+
     const savedProject = await newProject.save();
-    console.log("Project created:", savedProject);
+    logger.info("Project created successfully:", savedProject);
     res.status(201).json({
       status: "success",
       message: "Project created successfully",
       data: savedProject,
     });
   } catch (error) {
-    console.error("Error creating project:", error);
+    logger.error("Error creating project:", error);
     res.status(500).json({ message: "Error creating project" });
   }
 });
 
-export { getAllProjects, getProjectDetails, createProject };
+export { getAllProjects,getFilterOptions, getProjectDetails, createProject };

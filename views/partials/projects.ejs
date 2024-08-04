@@ -1,0 +1,30 @@
+<hr>
+<section class="projects container">
+  <header>
+    <h2 class="py-2 text-center">Latest Projects</h2>
+  </header>
+  <div class="row g-4 projects__cards">
+    <% if (projects && projects.length > 0) { %> <% projects.slice(0,
+    3).forEach(project => { %>
+    <div class="col-sm-12 col-md-6 col-lg-4 projects__card">
+      <a href="/projects/<%= project._id %>">
+        <img
+          src="<%= project.images && project.images.length > 0 ? project.images[0] : '' %>"
+          class="card__image"
+          alt="<%= project.title %>"
+        />
+      </a>
+      <div class="project__card-content">
+        <p class="project__card-title"><%= project.title %></p>
+        <p class="project__card-text">
+           <%= project.description %>
+        </p>
+        <a href="/projects/<%= project._id %>" class=""
+          >View Project</a>
+      </div>
+    </div>
+    <% }) %> <% } else { %>
+    <p>No projects found.</p>
+    <% } %>
+  </div>
+</section>

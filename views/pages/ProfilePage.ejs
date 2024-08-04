@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head.ejs")  %>
+
+<body>
+    <%- include('../partials/nav.ejs') %>
+    <div class="profile__container">
+        <h1>Profile Page</h1>
+        <p>Welcome, <%= user.username %>!</p>
+        <p>Name: <%= user.name %>
+        </p>
+        <p>Email: <%= user.email %>
+        </p>
+        <p>Is Alumni: <%= user.isAlumni %>
+        </p>
+        <p>Is Admin: <%= user.isAdmin %>
+        </p>
+    
+        <img src="/<%= user.profilePicture %>" alt="Profile Picture">
+    
+        <% if (user.isAlumni) { %>
+            <div class="alumni__details">
+                <h2>Alumni Details</h2>
+                <!-- Display specific alumni details here -->
+                <p>Graduation Year: <%= user.alumniDetails.yearOfGraduation %>
+                </p>
+                <p>Degree: <%= user.alumniDetails.academicDegree %>
+                </p>
+                <p>Faculty: <%= user.alumniDetails.faculty %>
+                </p>
+                <p>Department: <%= user.alumniDetails.department %>
+                </p>
+            </div>
+            <% } %>
+    </div>
+
+</body>
+</html>

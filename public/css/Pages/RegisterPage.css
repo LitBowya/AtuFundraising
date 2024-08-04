@@ -1,0 +1,187 @@
+@import url("../style.css");
+
+.register__container {
+  background-image: linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url("/images/atuschoolgrounds.jpg");
+    background-position-y: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .register__form-container {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .register__form-content {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 25px;
+
+      .register__form-left {
+        flex: 1;
+
+        & > div {
+          margin-block: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          & > input:not([type="checkbox"]) {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: 0.3s ease;
+            margin-top: 5px;
+
+            &:focus {
+              border: 1px solid #009879;
+            }
+          }
+        }
+      }
+      .register__form-right {
+        flex: 1;
+
+        & > div {
+          margin-block: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          & > input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: 0.3s ease;
+            margin-top: 5px;
+
+            &:focus {
+              border: 1px solid var(--primary-blue);
+            }
+          }
+        }
+      }
+
+      
+
+    }
+
+    .register__button-container{
+        display: flex;
+        justify-content: end;
+        margin-top: 25px;
+
+        button{
+            border: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: var(--primary-blue);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease;
+
+            &:hover {
+              background: var(--primary-yellow)
+        }
+      }
+  }
+
+  .div{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+
+    a{
+        font-weight: 500;
+        color: var(--primary-yellow);
+    }
+  }
+}
+
+.checkbox__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 10px;
+  color: white;
+  font-size: 14px;
+
+  .checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: 0;
+    height: 0;
+  }
+
+  .checkbox + .custom-checkbox {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    vertical-align: middle;
+  }
+
+  .checkbox:checked + .custom-checkbox {
+    background-color: #4caf50;
+    border-color: #4caf50;
+  }
+
+  .custom-checkbox:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  .checkbox:checked + .custom-checkbox:after {
+    display: block;
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .checkbox + .custom-checkbox:hover {
+    background-color: #e0e0e0;
+  }
+
+  .checkbox:focus + .custom-checkbox {
+    border: 2px solid #4caf50;
+  }
+}
+}

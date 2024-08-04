@@ -1,0 +1,32 @@
+<h1>All donations</h1>
+<ul>
+  <% donations.map(donation=> { %>
+  <li>
+    <strong>Donation ID:</strong>
+    <%= donation._id %><br />
+    <strong>User ID:</strong>
+    <%= donation.userId._id %><br />
+    <strong>User Name:</strong>
+    <%= donation.userId.name %><br />
+    <strong>User Profile Picture:</strong>
+    <img src=<%= donation.userId.profilePicture %> alt=""><br />
+    <strong>Project ID:</strong>
+    <%= donation.projectId._id %><br />
+    <strong>Project Title:</strong>
+    <%= donation.projectId.title %><br />
+    <strong>Project Description:</strong>
+    <%= donation.projectId.description %><br />
+    <strong>Amount:</strong>
+    <%= donation.amount %><br />
+    <strong>Date:</strong>
+    <%= donation.date %><br />
+    <strong>Created At:</strong>
+    <%= donation.createdAt %><br />
+    <strong>Updated At:</strong>
+    <%= donation.updatedAt %><br />
+    <strong>__v:</strong>
+    <%= donation.__v %><br />
+  </li>
+  <br />
+  <% }) %>
+</ul>

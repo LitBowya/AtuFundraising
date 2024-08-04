@@ -1,0 +1,38 @@
+@import url("../style.css");
+
+.contactus__container{
+    margin-block: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+
+    .contactus__info-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--primary-blue);
+        border-radius: 10px;
+        padding: 20px;
+        width: 300px;
+        height: 150px;
+        max-width: 100%;
+        cursor: pointer;
+
+        i{
+            font-size: 35px;
+            color: var(--primary-color);
+            padding-block: 15px;
+        }
+        a{
+            text-decoration: none;
+            
+        }
+        span{
+            color: var(--primary-yellow);
+            /* font-weight: 500; */
+        }
+    }
+}

@@ -1,0 +1,219 @@
+<%- include('../partials/head.ejs') %>
+
+<html>
+  <body>
+    <%- include('../partials/nav.ejs') %>
+    <section class="project-details container">
+      <h2>Project Details</h2>
+
+      <% if (project) { %>
+      <div class="row">
+        <!-- Left Column for Project Image -->
+        <div class="col-md-4">
+          <% if (project.images && project.images.length> 0) { %>
+          <img
+            src="<%= project.images[0] %>"
+            alt=""
+            class="img-fluid mb-3 main-project-image w-100"
+            id="mainProjectImage"
+          />
+          <% } %>
+
+          <!-- Additional Images Carousel -->
+          <div class="project-images">
+            <% project.images.forEach((image, index)=> { %>
+            <img
+              src="<%= image %>"
+              alt="Project Image"
+              class="img-thumbnail mr-2 mb-2 additional-project-image"
+              style="width: 100px; height: auto"
+              data-index="<%= index %>"
+              onclick="changeMainImage(this)"
+            />
+            <% }) %>
+          </div>
+        </div>
+
+        <!-- Right Column for Project Details -->
+        <div class="col-md-8">
+          <h3><%= project.title %></h3>
+          <p>
+            <span>Faculty: </span>
+            <%= project.faculty %>
+          </p>
+          <p>
+            <span>Department: </span>
+            <%= project.department %>
+          </p>
+          <p>
+            <span>Budget: GHS </span>
+            <%= project.budget %>
+          </p>
+          <p>
+            <span>Amount Left: GHS </span>
+            <%= project.amountLeft %>
+          </p>
+          <p>
+            <span>Description: </span>
+            <%= project.description %>
+          </p>
+          <p>
+            <span>Goals: </span>
+            <%= project.goals %>
+          </p>
+
+          <!-- Donate Button -->
+          <button
+            id="donateButton"
+            type="button"
+            class="btn btn-primary mt-3"
+            data-bs-toggle="modal"
+            data-bs-target="#donateModal"
+          >
+            Donate
+          </button>
+
+          <!-- Verify Button -->
+          <button
+            type="button"
+            class="btn btn-secondary mt-3"
+            data-bs-toggle="modal"
+            data-bs-target="#verifyModal"
+          >
+            Verify Donation
+          </button>
+        </div>
+      </div>
+
+      <% } else { %>
+      <p>No project details found.</p>
+      <% } %>
+    </section>
+
+    <!-- Donate Modal -->
+    <div
+      class="modal fade"
+      id="donateModal"
+      tabindex="-1"
+      aria-labelledby="donateModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="donateModalLabel">
+              Donate to <%= project.title %>
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="donationForm">
+              <div class="form-group">
+                <label for="amount">Amount (GHS)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="amount"
+                  name="amount"
+                  required
+                />
+              </div>
+              <input
+                type="hidden"
+                id="projectId"
+                name="projectId"
+                value="<%= project._id %>"
+              />
+              <button type="submit" class="btn btn-primary mt-3">
+                Submit Donation
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Verify Modal -->
+    <div
+      class="modal fade"
+      id="verifyModal"
+      tabindex="-1"
+      aria-labelledby="verifyModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="verifyModalLabel">
+              Verify Donation for <%= project.title %>
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              id="verifyForm"
+              action="/donations/donate/verify"
+              method="POST"
+            >
+              <div class="form-group">
+                <label for="reference">Payment Reference</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="reference"
+                  name="reference"
+                  required
+                />
+                <input type="hidden" id="paymentAmount" name="amount" />
+                <input type="hidden" id="paymentProjectId" name="projectId" />
+              </div>
+              <button type="submit" class="btn btn-secondary mt-3">
+                Verify Donation
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loader -->
+    <div id="loader" class="loader">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <style>
+      .project-images img {
+        max-width: 100px;
+        height: auto;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+      }
+
+      .loader {
+        position: fixed;
+        z-index: 9999;
+        background-color: rgba(255, 255, 255, 0.5);
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+
+    <!-- <script src="/js/ProjectDetailsPage.js"></script> -->
+  </body>
+</html>

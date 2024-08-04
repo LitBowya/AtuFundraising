@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head.ejs") %>
+  <body>
+    <%- include("../partials/nav.ejs") %>
+    <div class="register__container">
+      <div class="register__form-container">
+        <h2>Register</h2>
+        <form
+          action="/users/register"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="register__form-content">
+            <div class="register__form-left">
+              <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+              <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+              <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required />
+              </div>
+              <div>
+                <label for="profilePicture">Profile Picture</label>
+                <input
+                  type="file"
+                  id="profilePicture"
+                  name="profilePicture"
+                  accept="image/*"
+                  required
+                />
+              </div>
+              <div>
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" />
+              </div>
+              <div class="checkbox__container">
+                <label for="isAlumni">
+                  <input
+                    type="checkbox"
+                    id="isAlumni"
+                    name="isAlumni"
+                    onclick="toggleAlumniDetails()"
+                    class="checkbox"
+                  />
+                  Are You Alumni <span class="custom-checkbox"></span>
+                </label>
+              </div>
+            </div>
+
+            <div
+              id="alumniDetails"
+              class="register__form-right"
+              style="display: none"
+            >
+              <div>
+                <label for="yearOfGraduation">Year of Graduation</label>
+                <input
+                  type="date"
+                  id="yearOfGraduation"
+                  name="alumniDetails[yearOfGraduation]"
+                />
+              </div>
+              <div>
+                <label for="faculty">Faculty</label>
+                <input type="text" id="faculty" name="alumniDetails[faculty]" />
+              </div>
+              <div>
+                <label for="department">Department</label>
+                <input
+                  type="text"
+                  id="department"
+                  name="alumniDetails[department]"
+                />
+              </div>
+              <div>
+                <label for="academicDegree">Academic Degree</label>
+                <input
+                  type="text"
+                  id="academicDegree"
+                  name="alumniDetails[academicDegree]"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="register__button-container">
+            <button type="submit" class="regiser__button">Register</button>
+          </div>
+        </form>
+        <div class="div">
+          <span>Already Have An Account??</span>
+          <a href="/login">Login</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleAlumniDetails() {
+        var alumniDetails = document.getElementById("alumniDetails");
+        var isAlumni = document.getElementById("isAlumni").checked;
+        alumniDetails.style.display = isAlumni ? "block" : "none";
+
+        var alumniInputs = alumniDetails.querySelectorAll("input");
+        alumniInputs.forEach(function (input) {
+          input.required = isAlumni;
+        });
+      }
+    </script>
+  </body>
+</html>

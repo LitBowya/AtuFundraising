@@ -1,0 +1,63 @@
+<!-- views/createEvent.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../head.ejs') %>
+
+    <body>
+        <h1>Create Event</h1>
+        <div id="message"></div>
+        <!-- Your form for creating an event -->
+        <form id="createEventForm" enctype="multipart/form-data">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required><br><br>
+
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description" rows="4" required></textarea><br><br>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br><br>
+
+            <label for="venue">Venue:</label>
+            <input type="text" id="venue" name="venue" required><br><br>
+
+            <label for="type">Type:</label>
+            <input type="text" id="type" name="type" required><br><br>
+
+            <label for="purpose">Purpose:</label><br>
+            <textarea id="purpose" name="purpose" rows="4" required></textarea><br><br>
+
+            <label for="images">Images:</label>
+            <input type="file" id="images" name="images" multiple required><br><br>
+
+            <button type="submit">Create Event</button>
+        </form>
+
+        <script>
+            document.getElementById('createEventForm').addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const form = document.getElementById('createEventForm');
+                const formData = new FormData(form);
+
+                try {
+                    const response = await axios.post('/events/create', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+
+                    if (response.data.success) {
+                        document.getElementById('message').innerHTML = '<p>Event created successfully!</p>';
+                        form.reset(); // Clear the input fields
+                    } else {
+                        document.getElementById('message').innerHTML = '<p>Error creating event. Please try again.</p>';
+                    }
+                } catch (error) {
+                    document.getElementById('message').innerHTML = '<p>Error creating event. Please try again.</p>';
+                }
+            });
+        </script>
+    </body>
+
+</html>

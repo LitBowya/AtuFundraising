@@ -1,0 +1,99 @@
+@import url("../style.css");
+
+.login__container {
+  background-image: linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url("/images/atuschoolgrounds.jpg");
+    background-position-y: 100%;
+  height: calc(100vh - 75px);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .login__container-form {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 450px;
+    max-width: 450px;
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    form > div {
+      margin-block: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      & > input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: 0.3s ease;
+        margin-top: 5px;
+
+        &:focus {
+          border: 1px solid var(--primary-blue);
+        }
+      }
+    }
+
+    .login__button {
+      display: flex;
+      align-items: end;
+      margin-top: 25px;
+
+      button {
+        border: none;
+        padding: 12px 15px;
+        border-radius: 8px;
+        background: var(--primary-blue);
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s ease;
+
+        &:hover {
+          background: var(--primary-yellow);
+        }
+      }
+    }
+  }
+
+  .div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    a{
+        color: var(--primary-yellow);
+        font-weight: 500;
+    }
+
+    #errorMessage{
+        background-color: rgba(255, 9, 9, 0.418);
+        color: rgb(233, 233, 233);
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+  }
+}

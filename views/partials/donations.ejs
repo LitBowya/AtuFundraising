@@ -1,0 +1,25 @@
+<hr>
+<section class="donations container">
+  <header>
+    <h2><span>Top</span> Donors</h2>
+  </header>
+  <div class="row g-4 donation__cards">
+    <% topDonors.map((donor)=> { %>
+    <div class="col-md-3">
+      <div class="donation__card">
+        <div class="donation__card-body">
+          <img
+            src="<%= donor.user.profilePicture %>"
+            class="donation__card-image"
+            alt="<%= donor.user.name %>"
+          />
+          <div class="donation__card-footer">
+            <h6 class="donation__card-title m-0"><%= donor.user.name %></h6>
+            <p class="donation__card-text m-0">GHS <%= donor.totalDonation %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</section>

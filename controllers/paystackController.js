@@ -1,4 +1,4 @@
-import https from 'https'
+import https from "https";
 import paystack from "../utils/payment.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import Donation from "../models/donationModel.js";
@@ -10,7 +10,7 @@ const initializePayment = asyncHandler(async (req, res) => {
 
     const params = JSON.stringify({
       email: email,
-      amount: amount * 100,
+      amount: amount,
       name: name,
     });
 
@@ -59,7 +59,7 @@ const verifyPayment = asyncHandler(async (req, res) => {
       const user = await User.findOne({ email: customer.email });
       const newDonation = new Donation({
         userId: user._id,
-        amount: amount / 100, // Convert from kobo
+        amount: amount / 100,
         date: paid_at,
         recurring: false,
       });
@@ -75,42 +75,4 @@ const verifyPayment = asyncHandler(async (req, res) => {
   }
 });
 
-const setupRecurringPayment = asyncHandler(async (req, res) => {
-  try {
-    const { email, amount, frequency } = req.body;
-    const customerResponse = await paystack.post("/customer", { email });
-    const { customer_code } = customerResponse.data.data;
-
-    const planResponse = await paystack.post("/plan", {
-      name: `Recurring Donation - ${frequency}`,
-      amount: amount * 100,
-      interval: frequency, // monthly, quarterly, annual
-    });
-    const { plan_code } = planResponse.data.data;
-
-    const subscriptionResponse = await paystack.post("/subscription", {
-      customer: customer_code,
-      plan: plan_code,
-    });
-    const { subscription_code } = subscriptionResponse.data.data;
-
-    const user = await User.findOne({ email });
-    const newDonation = new Donation({
-      userId: user._id,
-      amount,
-      date: new Date(),
-      recurring: true,
-      frequency,
-      paystackSubscriptionCode: subscription_code,
-      paystackCustomerCode: customer_code,
-    });
-    await newDonation.save();
-    console.log("Recurring payment set up:", newDonation);
-    // res.redirect("/donation-history");
-  } catch (error) {
-    console.error("Error setting up recurring payment:", error);
-    res.status(500).send("Error setting up recurring payment");
-  }
-});
-
-export { initializePayment, verifyPayment, setupRecurringPayment };
+export { initializePayment, verifyPayment };

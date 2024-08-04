@@ -1,0 +1,63 @@
+@import url("./style.css");
+
+.donations {
+  background-color: white;
+  padding-block: 1em;
+  border-radius: 15px;
+  header {
+    display: flex;
+    justify-content: center;
+    margin-top: 45px;
+    margin-bottom: 15px;
+
+    h2 {
+      background: linear-gradient(
+        to left,
+        var(--primary-blue),
+        var(--primary-yellow)
+      );
+      background-clip: text;
+      color: transparent;
+      display: inline;
+      text-align: center;
+    }
+  }
+
+  .donation__card-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    flex-wrap: wrap;
+
+    img{
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        transition: .5s ease-in-out;
+        margin-bottom: 10px;
+        object-fit: cover;
+
+        &:hover{
+            cursor: pointer;
+            box-shadow: 0 0 5px black;
+            transform: translateY(-25px) scale(1.05);
+        }
+
+        &:active{
+            filter: none;
+            cursor: pointer;
+        }
+    }
+
+    img:hover .donation__card-footer{
+        display: block;
+    }
+
+    .donation__card-footer{
+        text-align: center;
+        
+    }
+  }
+}

@@ -1,0 +1,60 @@
+@import url("./style.css");
+
+.mission {
+  text-align: center;
+
+  .fa-crosshairs {
+    font-size: 2rem;
+  }
+
+  .mission__aim-text {
+    font-size: 1.2rem;
+  }
+
+  .mission__content-aim {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    gap: 30px;
+
+    @media (max-width: 800px) {
+      &{
+        flex-direction: column;
+      }
+    }
+
+    .mission__content-mission {
+      flex: 1;
+      cursor: pointer;
+
+      .mission__header {
+        background-color: var(--primary-blue);
+        color: var(--primary-yellow);
+        border-radius: 10px;
+        padding-block: 10px;
+      }
+
+      .fa-solid {
+        font-size: 1.75rem;
+        padding-block: 10px;
+      }
+    }
+
+    .mission__content-vision {
+      flex: 1;
+      cursor: pointer;
+
+      .vision__header {
+        background-color: var(--primary-yellow);
+        color: var(--primary-blue);
+        border-radius: 10px;
+        padding-block: 10px;
+      }
+
+      .fa-solid {
+        font-size: 1.75rem;
+        padding-block: 10px;
+      }
+    }
+  }
+}

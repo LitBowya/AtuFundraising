@@ -5,8 +5,10 @@
   "description": "A fundraising platform for Accra Technical University",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "browser-sync": "browser-sync start --proxy 'localhost:5000' --files 'public/**/*'",
+    "client-reload": "lite-server --proxy http://localhost:5000 --files '**/*.ejs'",
+    "app": "concurrently \"npm run dev\" \"npm run client-reload\""
   },
   "author": "Fianko Caleb, Julius Fosu Antwi, Henry Hopeson",
   "license": "ISC",
@@ -20,7 +22,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.1",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "winston": "^3.13.0"
   },
   "devDependencies": {
     "dotenv": "^16.4.5"

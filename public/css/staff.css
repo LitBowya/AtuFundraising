@@ -1,0 +1,72 @@
+@import url("./style.css");
+
+.meet__staff {
+  background-color: white;
+  padding-block: 1em;
+  border-radius: 15px;
+  margin-bottom: 50px;
+
+  header {
+    display: flex;
+    justify-content: center;
+    margin-top: 45px;
+    margin-bottom: 15px;
+
+    h2 {
+      background: linear-gradient(
+        to left,
+        var(--primary-blue),
+        var(--primary-yellow)
+      );
+      background-clip: text;
+      color: transparent;
+      display: inline;
+      text-align: center;
+    }
+  }
+
+  .staff__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    position: relative;
+
+    .staff__item {
+      width: 250px;
+      transition: 0.5s all;
+      cursor: pointer;
+      position: relative;
+
+      .staff__image {
+        width: 100%;
+        position: relative;
+        z-index: 1;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .staff__info {
+        position: relative;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        text-align: center;
+        padding-inline: 10px;
+        z-index: 2;
+
+        h5 {
+          margin: 0;
+          font-family: "Poppins";
+        }
+
+        p {
+          margin: 0;
+          font-family: "Roboto";
+        }
+      }
+
+    }
+  }
+}

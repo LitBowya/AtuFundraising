@@ -1,0 +1,74 @@
+@import url("./style.css");
+
+.projects {
+  background-color: white;
+  padding-block: 1em;
+  border-radius: 15px;
+  header {
+    display: flex;
+    justify-content: center;
+    margin-top: 45px;
+    margin-bottom: 15px;
+
+    h2 {
+      background: linear-gradient(
+        to left,
+        var(--primary-blue),
+        var(--primary-yellow)
+      );
+      background-clip: text;
+      color: transparent;
+      display: inline;
+      text-align: center;
+    }
+  }
+
+  .projects__cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+
+    .projects__card {
+      padding: 0;
+      width: 300px;
+      border: 1px solid rgb(222, 222, 222);
+      transition: 0.5s all;
+
+      &:hover {
+        filter: none;
+        transform: translateY(-10px);
+        box-shadow: -5px -5px 0 var(--primary-blue);
+        box-shadow: 5px 5px 0 var(--primary-yellow);
+      }
+
+      .card__image {
+        width: 100%;
+        overflow: hidden;
+        height: 180px;
+        filter: grayscale(15);
+      }
+
+      &:hover .card__image{
+        filter: none;
+      }
+
+      .project__card-content {
+        padding: 10px 15px;
+
+        p {
+          margin: 0;
+        }
+
+        .project__card-title {
+          font-family: "Poppins";
+          font-size: 1.5rem;
+          color: var(--primary-yellow);
+        }
+
+        .project__card-text {
+          color: var(--primary-blue);
+        }
+      }
+    }
+  }
+}

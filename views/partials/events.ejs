@@ -1,0 +1,30 @@
+<hr />
+
+<section class="events container">
+  <header>
+    <h2 class="py-2 text-center">Latest Events</h2>
+  </header>
+
+  <div class="events__cards">
+    <% events.slice(0,3).map((event)=> { %>
+    <div class="events__card-container">
+      <div class="events__card">
+        <div class="events__card-body" tabindex="0">
+          <img
+            src="<%= event.images[0]  %>"
+            class="events__card-image"
+            alt="<%= event.title %>"
+          />
+          <div class="events__card-footer">
+            <h6 class="events__card-title">Title: <%= event.title %></h6>
+          <p class="events__card-text">Venue <%= event.venue %></p>
+          <p class="events__card-text">Description <%= event.description %></p>
+          <p class="events__card-text">Type <%= event.type %></p>
+          <p class="events__card-text">Purpose <%= event.purpose %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</section>

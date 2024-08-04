@@ -1,34 +1,123 @@
+import express from "express";
 import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/userModel.js";
+import Donation from "../models/donationModel.js";
+import { uploadSingleImage } from "../routes/uploadRoutes.js";
 import generateToken from "../utils/generateToken.js";
+import logger from "../logger.js";
 import dotenv from "dotenv";
+
+const router = express.Router();
+const app = express();
 
 dotenv.config();
 
-const loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+const registerUser = asyncHandler(async (req, res) => {
+  logger.debug("Register user route hit");
+  uploadSingleImage(req, res, async (err) => {
+    if (err) {
+      logger.error(`Image upload failed: ${err.message}`);
+      return res.status(400).send({ message: "Image upload failed" });
+    }
 
-  if (user && (await user.matchPassword(password))) {
-    generateToken(res, user._id);
+    const {
+      name,
+      username,
+      email,
+      password,
+      phoneNumber,
+      isAdmin,
+      isAlumni, // This is coming as "on" or undefined
+      alumniDetails,
+    } = req.body;
 
-    res.json({
-      message: "Logged In Successfully",
-      data: {
-        _id: user._id,
-        username: user.username,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-        isAlumni: user.isAlumni,
-        alumniDetails: user.isAlumni ? user.alumniDetails : null,
-      }
+    logger.debug(`Received registration data for email: ${email}`);
+
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      logger.warn(`User already exists: ${email}`);
+      return res.status(400).send({ message: "User already exists" });
+    }
+
+    // Convert "on" to true or default to false
+    const isAlumniBoolean = isAlumni === "on" ? true : false;
+
+    const newUser = await User.create({
+      name,
+      username,
+      email,
+      password,
+      profilePicture: req.file.path,
+      phoneNumber,
+      isAdmin,
+      isAlumni: isAlumniBoolean, // Set the boolean value
+      alumniDetails: isAlumniBoolean ? alumniDetails : null,
     });
 
-    console.log(user);
-  } else {
-    res.status(401);
-    throw new Error("Invalid email or password");
+    if (newUser) {
+      logger.debug(`User registered successfully: ${newUser.email}`);
+
+      res.status(201).json({
+        message: "Registered user successfully",
+        data: {
+          _id: newUser._id,
+          name: newUser.name,
+          username: newUser.username,
+          email: newUser.email,
+          profilePicture: newUser.profilePicture,
+          isAdmin: newUser.isAdmin,
+          isAlumni: newUser.isAlumni,
+          alumniDetails: newUser.isAlumni ? newUser.alumniDetails : null,
+        },
+      });
+
+      return res.redirect("/login");
+    } else {
+      logger.error("Invalid user data");
+      res.status(400).send({ message: "Invalid user data" });
+    }
+  });
+});
+
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  logger.debug(`Attempting login for email: ${email}`);
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (user && (await user.matchPassword(password))) {
+      generateToken(res, user._id);
+
+      logger.info(`User ${email} logged in successfully`);
+
+      res.status(200).json({
+        success: true,
+        message: "Logged In Successfully",
+        data: {
+          _id: user._id,
+          username: user.username,
+          name: user.name,
+          email: user.email,
+          profilePicture: user.profilePicture,
+          isAdmin: user.isAdmin,
+          isAlumni: user.isAlumni,
+          alumniDetails: user.isAlumni ? user.alumniDetails : null,
+        },
+      });
+    } else {
+      logger.warn(`Invalid email or password for email: ${email}`);
+      res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+  } catch (error) {
+    logger.error(`Error logging in for email: ${email}`, error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
   }
 });
 
@@ -41,74 +130,41 @@ const logoutUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-const registerUser = asyncHandler(async (req, res) => {
-  const {
-    name,
-    username,
-    email,
-    password,
-    profilePicture,
-    phoneNumber,
-    isAdmin,
-    isAlumni,
-    alumniDetails,
-  } = req.body;
-
-  const userExists = await User.findOne({ email });
-  if (userExists) {
-    res.status(400);
-    throw new Error("User already exists");
-  }
-
-  const newUser = await User.create({
-    name,
-    username,
-    email,
-    password,
-    profilePicture,
-    phoneNumber,
-    isAdmin,
-    isAlumni,
-    alumniDetails: isAlumni ? alumniDetails : null,
-  });
-
-  if (newUser) {
-    res.status(201).json({
-      message: "Registered user successfully",
-      data: {
-        _id: newUser._id,
-        name: newUser.name,
-        username: newUser.username,
-        email: newUser.email,
-        profilePicture: newUser.profilePicture,
-        isAdmin: newUser.isAdmin,
-        isAlumni: newUser.isAlumni,
-        alumniDetails: newUser.isAlumni ? newUser.alumniDetails : null,
-      },
-    });
-  } else {
-    res.status(400);
-    throw new Error("Invalid user data");
-  }
-});
-
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
-    res.status(200).json({
-      message: "User Profile",
-      data: {
-        _id: user._id,
-        username: user.username,
-        name: user.name,
-        email: user.email,
-        profilePicture: user.profilePicture,
-        isAdmin: user.isAdmin,
-        isAlumni: user.isAlumni,
-        alumniDetails: user.isAlumni ? user.alumniDetails : null,
-      }
-    });
+    if (req.xhr || req.headers.accept.indexOf("json") > -1) {
+      // Respond with JSON data
+      res.json({
+        success: true,
+        user: {
+          _id: user._id,
+          username: user.username,
+          name: user.name,
+          email: user.email,
+          profilePicture: user.profilePicture,
+          isAdmin: user.isAdmin,
+          isAlumni: user.isAlumni,
+          alumniDetails: user.isAlumni ? user.alumniDetails : null,
+        },
+      });
+    } else {
+      // Render the EJS view for the profile page
+      res.render("pages/ProfilePage", {
+        title: "Profile Page",
+        user: {
+          _id: user._id,
+          username: user.username,
+          name: user.name,
+          email: user.email,
+          profilePicture: user.profilePicture,
+          isAdmin: user.isAdmin,
+          isAlumni: user.isAlumni,
+          alumniDetails: user.isAlumni ? user.alumniDetails : null,
+        },
+      });
+    }
   } else {
     res.status(404);
     throw new Error("User not found");
@@ -136,7 +192,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         username: user.username,
         email: updatedUser.email,
         isAdmin: updatedUser.isAdmin,
-      }
+      },
     });
   } else {
     res.status(200);
@@ -156,23 +212,23 @@ const getUserById = asyncHandler(async (req, res) => {
   // Check if the provided ID is a valid MongoDB ObjectId
   if (!id.match(/^[0-9a-fA-F]{24}$/)) {
     res.status(400);
-    throw new Error('Invalid user ID');
+    throw new Error("Invalid user ID");
   }
 
   try {
-    const user = await User.findById(id).select('-password');
-    console.log('User found:', user);
+    const user = await User.findById(id).select("-password");
+    console.log("User found:", user);
 
     if (user) {
       res.status(200).json(user);
     } else {
       res.status(404);
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
   } catch (error) {
-    console.error('Error fetching user:', error);
+    console.error("Error fetching user:", error);
     res.status(500);
-    throw new Error('Server error');
+    throw new Error("Server error");
   }
 });
 
@@ -216,23 +272,6 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
-const updatePrivacySettings = asyncHandler(async (req, res) => {
-  try {
-    const userId = req.user._id;
-    const { showEmail, showPhoneNumber, showAddress } = req.body;
-    const user = await User.findByIdAndUpdate(
-      userId,
-      { privacySettings: { showEmail, showPhoneNumber, showAddress } },
-      { new: true }
-    );
-    console.log("Privacy settings updated:", user);
-    res.redirect("/privacy-settings");
-  } catch (error) {
-    console.error("Error updating privacy settings:", error);
-    res.status(500).send("Error updating privacy settings");
-  }
-});
-
 export {
   loginUser,
   logoutUser,
@@ -243,5 +282,6 @@ export {
   getUserById,
   deleteUser,
   updateUser,
-  updatePrivacySettings,
 };
+
+export default router;

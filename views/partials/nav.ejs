@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head.ejs") %>
+
+  <body>
+    <nav class="nav">
+      <a href="/" class="nav__logo">
+        <img src="/images/atulogo.jpg" alt="" class="" />
+      </a>
+      <div class="nav__menu">
+        <ul class="nav__link">
+          <li><a href="/about" class="nav__link-list">About Us</a></li>
+          <li><a href="/events" class="nav__link-list">Events</a></li>
+          <li><a href="/projects" class="nav__link-list">Projects</a></li>
+          <li><a href="/contact-us" class="nav__link-list">Contact Us</a></li>
+
+        </ul>
+        <i class="fa-solid fa-bars fa-lg text-white"></i>
+        <% const titlesToShow=['Project Details', 'Profile Page' ]; %> <% if
+        (!titlesToShow.includes(title)) { %>
+        <div class="nav__register" id="navRegister">
+          <!-- Placeholder for dynamic content -->
+          <% titlesToShow.forEach((item)=> { %>
+          <p><%= item %></p>
+          <% }); %>
+        </div>
+        <% } %>
+      </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        try {
+          const response = await axios.get("/users/profile", {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${document.cookie.split("=")[1]}`,
+            },
+          });
+
+          const data = response.data.user;
+          const navRegister = document.getElementById("navRegister");
+
+          if (data && data.profilePicture) {
+            const profilePicture = `<img src="${data.profilePicture}" alt="Profile" class="nav__profile-picture" id="profile-picture" />`;
+            navRegister.innerHTML = profilePicture;
+
+            // Dropdown menu items
+            const dropdownMenu = `
+                        <div class="dropdown-content" id="dropdownContent">
+                            <a href="/users/profile">Profile</a>
+                            <a href="#" id="logoutButton">Logout</a>
+                            ${
+                              data.isAdmin
+                                ? '<a href="/admin" id="adminDropdownLink">Admin</a>'
+                                : ""
+                            }
+                        </div>
+                    `;
+            navRegister.insertAdjacentHTML("beforeend", dropdownMenu);
+
+            // Toggle dropdown on profile picture click
+            const profilePictureElement =
+              document.getElementById("profile-picture");
+            const dropdownContent = document.getElementById("dropdownContent");
+            profilePictureElement.addEventListener("click", function () {
+              dropdownContent.classList.toggle("show");
+            });
+
+            // Handle logout button click
+            const logoutButton = document.getElementById("logoutButton");
+            logoutButton.addEventListener("click", function (event) {
+              event.preventDefault(); // Prevent the default anchor tag behavior
+
+              axios
+                .post(
+                  "/users/logout",
+                  {},
+                  {
+                    headers: {
+                      Authorization: `Bearer ${document.cookie.split("=")[1]}`,
+                    },
+                  }
+                )
+                .then((response) => {
+                  window.location.href = "/login";
+                })
+                .catch((error) => {
+                  console.error("Error logging out:", error);
+                });
+            });
+
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function (event) {
+              if (!event.target.matches(".nav__profile-picture")) {
+                const dropdowns =
+                  document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                  const openDropdown = dropdowns[i];
+                  if (openDropdown.classList.contains("show")) {
+                    openDropdown.classList.remove("show");
+                  }
+                }
+              }
+            };
+          } else {
+            const registerButton = `<a href="/login" class="nav__register-button" id="register-button">Login</a>`;
+            navRegister.innerHTML = registerButton;
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          // If there's an error fetching profile data, ensure register button is shown
+          const registerButton = `<a href="/login" class="nav__register-button" id="register-button">Login</a>`;
+          const navRegister = document.getElementById("navRegister");
+          navRegister.innerHTML = registerButton;
+        }
+      });
+    </script>
+
+    <style>
+      .nav__profile-picture {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 10px;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #f1f1f1;
+      }
+
+      .show {
+        display: block;
+      }
+    </style>
+  </body>
+</html>

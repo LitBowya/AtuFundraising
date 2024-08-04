@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head.ejs")  %>
+
+<body>
+    <%- include('../partials/nav.ejs') %>
+    <%- include('../partials/header.ejs') %>
+    <h1>Events Page</h1>
+
+    <ul>
+        <% events.forEach(event=> { %>
+            <li>
+                <img src=<%= event.images[0]  %> alt="">
+                <h2>
+                    <%= event.title %>
+                </h2>
+                <p>
+                    <%= event.description %>
+                </p>
+                <p>Date: <%= event.date.toDateString() %>
+                </p>
+                <p>Venue: <%= event.venue %>
+                </p>
+            </li>
+            <% }); %>
+    </ul>
+    <%- include('../partials/footer.ejs') %>
+</body>
+</html>

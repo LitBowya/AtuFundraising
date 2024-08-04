@@ -9,7 +9,6 @@ import {
   getUserById,
   deleteUser,
   updateUser,
-  updatePrivacySettings,
 } from "../controllers/userController.js";
 import { protect, admin } from '../middleware/authMiddleware.js';
 
@@ -18,7 +17,6 @@ const router = express.Router();
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
 router.post("/register", registerUser);
-router.post("/update-privacy", updatePrivacySettings);
 router
   .route("/profile")
   .get(protect, getUserProfile)
