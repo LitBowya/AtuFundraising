@@ -3,24 +3,17 @@
   <%- include("../partials/head.ejs") %>
 
   <body>
-    <%- include('../partials/nav.ejs') %>
-    <%- include('../partials/header.ejs') %>
+    <%- include('../partials/nav.ejs') %> <%- include('../partials/header.ejs')
+    %>
 
-
-
-    <div class="container my-3">
+    <div class="container my-3 project__page__container">
       <div class="row">
-        <!-- Filter Button for Smaller Screens -->
-        <div class="d-lg-none mb-3">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
-            Filters
-          </button>
-        </div>
-
         <!-- Filter Sidebar for Larger Screens -->
-        <div class="col-lg-3 d-none d-lg-block">
+        <div class="col-lg-3 d-none d-lg-block filter__form-container">
           <form id="filter-form" class="filter-form">
-
+            <header>
+              <h4>Filters</h4>
+            </header>
             <div class="mb-3">
               <h5>Faculties</h5>
               <div id="faculties-checkboxes"></div>
@@ -37,8 +30,18 @@
             </div>
 
             <div class="mb-3">
-              <input type="number" name="minBudget" placeholder="Min Budget" class="form-control mb-3" />
-              <input type="number" name="maxBudget" placeholder="Max Budget" class="form-control mb-3" />
+              <input
+                type="number"
+                name="minBudget"
+                placeholder="Min Budget"
+                class="form-control mb-3"
+              />
+              <input
+                type="number"
+                name="maxBudget"
+                placeholder="Max Budget"
+                class="form-control mb-3"
+              />
             </div>
 
             <div class="mb-3">
@@ -57,72 +60,83 @@
               </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">Apply Filters</button>
+            <button type="submit" class="filter-button">Apply Filters</button>
           </form>
         </div>
 
         <!-- Project Cards -->
         <div class="col-lg-9">
-            <header class="py-3">
-                <h1>Project Page</h1>
+          <div class="projects__page">
+            <header>
+              <h2 class="py-2 text-center">Our Projects</h2>
+              <!-- Filter Button for Smaller Screens -->
+              <div
+                class="d-lg-none mb-3 filter__modal"
+                data-bs-toggle="modal"
+                data-bs-target="#filterModal"
+              >
+                <i class="fa-solid fa-filter"></i>
+                <span>Filters</span>
+              </div>
             </header>
-          <div class="row g-4">
-            <% if (projects && projects.length > 0) { %>
-              <% projects.forEach(project => { %>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                  <div class="card projects__card">
-                    <img
-                      src="<%= project.images && project.images.length > 0 ? project.images[0] : '' %>"
-                      class="card-img-top"
-                      alt="<%= project.title %>"
-                    />
-
-                    <div class="card-body">
-                      <h5 class="card-title"><%= project.title %></h5>
-                      <p class="card-text">
-                        <span>Faculty: </span><%= project.faculty %>
-                      </p>
-                      <p class="card-text">
-                        <span>Department: </span><%= project.department %>
-                      </p>
-                      <p class="card-text">
-                        <span>Budget: GHS </span><%= project.budget %>
-                      </p>
-                      <p class="card-text">
-                        <span>Timeline: </span><%= project.timeline %>
-                      </p>
-
-                      <% if (project.amountLeft > 0) { %>
-                      <p class="card-text">
-                        <span>Amount Left: GHS </span><%= project.amountLeft %>
-                      </p>
-                      <a href="/projects/<%= project._id %>" class="btn btn-primary">View Project</a>
-                      <% } else { %>
-                      <p class="card-text">Budget has been met</p>
-                      <% } %>
-                    </div>
-                  </div>
+            <div class="row g-4 projects__cards">
+              <% if (projects && projects.length > 0) { %> <%
+              projects.forEach(project => { %>
+              <div class="col-sm-6 col-md-6 col-lg-4 projects__card">
+                <a href="/projects/<%= project._id %>">
+                  <img
+                    src="<%= project.images && project.images.length > 0 ? project.images[0] : '' %>"
+                    class="card__image"
+                    alt="<%= project.title %>"
+                  />
+                </a>
+                <div class="project__card-content">
+                  <p class="project__card-amount">GHS <%= project.budget %></p>
+                  <p class="project__card-title"><%= project.title %></p>
+                  <a href="/projects/<%= project._id %>" class=""
+                    >View Project</a
+                  >
+                  <p class="project__card-department">
+                    <%= project.department %>
+                  </p>
                 </div>
-              <% }) %>
-            <% } else { %>
+              </div>
+              <% }) %> <% } else { %>
               <p>No projects found.</p>
-            <% } %>
+              <% } %>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Filter Modal for Smaller Screens -->
-    <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="filterModal"
+      tabindex="-1"
+      aria-labelledby="filterModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="filterModalLabel">Filters</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body">
             <form id="filter-form-modal" class="filter-form">
-              <input type="text" name="title" placeholder="Title" class="form-control mb-3" />
+              <input
+                type="text"
+                name="title"
+                placeholder="Title"
+                class="form-control mb-3"
+              />
 
               <div class="mb-3">
                 <h5>Faculties</h5>
@@ -140,8 +154,18 @@
               </div>
 
               <div class="mb-3">
-                <input type="number" name="minBudget" placeholder="Min Budget" class="form-control mb-3" />
-                <input type="number" name="maxBudget" placeholder="Max Budget" class="form-control mb-3" />
+                <input
+                  type="number"
+                  name="minBudget"
+                  placeholder="Min Budget"
+                  class="form-control mb-3"
+                />
+                <input
+                  type="number"
+                  name="maxBudget"
+                  placeholder="Max Budget"
+                  class="form-control mb-3"
+                />
               </div>
 
               <div class="mb-3">
@@ -160,7 +184,9 @@
                 </select>
               </div>
 
-              <button type="submit" class="btn btn-primary">Apply Filters</button>
+              <button type="submit" class="filter-button">
+                Apply Filters
+              </button>
             </form>
           </div>
         </div>
@@ -168,44 +194,55 @@
     </div>
 
     <script>
-      document.getElementById('filter-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const params = new URLSearchParams(new FormData(this)).toString();
-        window.location.href = '/projects?' + params;
-      });
+      document
+        .getElementById("filter-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const params = new URLSearchParams(new FormData(this)).toString();
+          window.location.href = "/projects?" + params;
+        });
 
-      document.getElementById('filter-form-modal').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const params = new URLSearchParams(new FormData(this)).toString();
-        window.location.href = '/projects?' + params;
-      });
+      document
+        .getElementById("filter-form-modal")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const params = new URLSearchParams(new FormData(this)).toString();
+          window.location.href = "/projects?" + params;
+        });
 
       // Fetch filter options dynamically
       async function fetchFilterOptions() {
         try {
-          const response = await fetch('/projects/filters');
+          const response = await fetch("/projects/filters");
           const data = await response.json();
-          populateCheckboxes(data.faculties, 'faculties-checkboxes');
-          populateCheckboxes(data.departments, 'departments-checkboxes');
-          populateCheckboxes(data.timelines, 'timeline-checkboxes');
-          populateCheckboxes(data.faculties, 'faculties-checkboxes-modal');
-          populateCheckboxes(data.departments, 'departments-checkboxes-modal');
-          populateCheckboxes(data.timelines, 'timeline-checkboxes-modal');
+          populateCheckboxes(data.faculties, "faculties-checkboxes");
+          populateCheckboxes(data.departments, "departments-checkboxes");
+          populateCheckboxes(data.timelines, "timeline-checkboxes");
+          populateCheckboxes(data.faculties, "faculties-checkboxes-modal");
+          populateCheckboxes(data.departments, "departments-checkboxes-modal");
+          populateCheckboxes(data.timelines, "timeline-checkboxes-modal");
         } catch (error) {
-          console.error('Error fetching filter options:', error);
+          console.error("Error fetching filter options:", error);
         }
       }
 
       function populateCheckboxes(items, elementId) {
         const container = document.getElementById(elementId);
-        container.innerHTML = items.map(item => `
+        container.innerHTML = items
+          .map(
+            (item) => `
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="${elementId.replace('-checkboxes', '')}" value="${item}" id="${elementId}-${item}">
+            <input class="form-check-input" type="checkbox" name="${elementId.replace(
+              "-checkboxes",
+              ""
+            )}" value="${item}" id="${elementId}-${item}">
             <label class="form-check-label" for="${elementId}-${item}">
               ${item}
             </label>
           </div>
-        `).join('');
+        `
+          )
+          .join("");
       }
 
       fetchFilterOptions();

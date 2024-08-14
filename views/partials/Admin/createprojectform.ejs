@@ -1,0 +1,135 @@
+<html lang="en">
+  <head>
+    <style>
+      .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Create Project</h2>
+      <form
+        id="createProjectForm"
+        method="POST"
+        action="/projects/create"
+        enctype="multipart/form-data"
+      >
+        <label for="title">Title:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          required
+          class="form-control"
+        /><br />
+
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          required
+          class="form-control"
+        ></textarea
+        ><br />
+
+        <label for="goals">Goals:</label>
+        <div id="goals-container">
+          <input type="text" name="goals[]" class="form-control mb-2" />
+        </div>
+        <button type="button" class="btn btn-secondary" id="addGoalButton">
+          Add Another Goal
+        </button>
+
+        <div class="row">
+          <div class="col-6">
+            <label for="timeline">Timeline:</label>
+            <input
+              type="text"
+              id="timeline"
+              name="timeline"
+              required
+              class="form-control"
+            /><br />
+          </div>
+          <div class="col-6">
+            <label for="budget">Budget:</label>
+            <input
+              type="number"
+              id="budget"
+              name="budget"
+              required
+              class="form-control"
+            /><br />
+          </div>
+        </div>
+
+        <label for="purpose">Purpose:</label>
+        <textarea
+          id="purpose"
+          name="purpose"
+          required
+          class="form-control"
+        ></textarea
+        <br />
+
+        <div class="row">
+          <div class="col-6">
+            <label for="faculty">Faculty:</label>
+            <input
+              type="text"
+              id="faculty"
+              name="faculty"
+              required
+              class="form-control"
+            /><br />
+          </div>
+          <div class="col-6">
+            <label for="department">Department:</label>
+            <input
+              type="text"
+              id="department"
+              name="department"
+              required
+              class="form-control"
+            /><br />
+          </div>
+        </div>
+
+        <label for="images">Images:</label>
+        <input
+          type="file"
+          id="images"
+          name="images"
+          multiple
+          accept="image/*"
+          class="form-control"
+        /><br />
+
+        <button type="submit" class="btn btn-primary">Create Project</button>
+      </form>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const addGoalButton = document.getElementById("addGoalButton");
+        const goalsContainer = document.getElementById("goals-container");
+
+        if (addGoalButton && goalsContainer) {
+          addGoalButton.addEventListener("click", function () {
+            const newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.name = "goals[]";
+            newInput.className = "form-control mb-2";
+            goalsContainer.appendChild(newInput);
+          });
+        } else {
+          console.error("Add Goal button or Goals container not found");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -11,6 +11,6 @@ const router = express.Router();
 
 router.post("/create", uploadMultipleImages, protect, admin, createEvent);
 router.get("/", protect, getEvents);
-router.get("/events/:id", protect, getEventById);
+router.get("/:id", protect, getEventById);
 
 export default router

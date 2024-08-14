@@ -1,0 +1,161 @@
+<html lang="en">
+  <head>
+    <style>
+      .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Create Event</h2>
+      <form
+        id="createEventForm"
+      >
+        <div class="">
+          <label for="title">Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="">
+          <label for="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            class="form-control"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="">
+              <label for="date">Date:</label>
+              <input
+                type="date"
+                id="date"
+                name="date"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="">
+              <label for="time">Time:</label>
+              <input
+                type="time"
+                id="time"
+                name="time"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="">
+          <label for="goals">Goals:</label>
+          <div id="goals-container">
+            <input type="text" name="goals[]" class="form-control mb-2" />
+          </div>
+          <button type="button" class="btn btn-secondary" id="addGoalButton">
+            Add Another Goal
+          </button>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <div class="">
+              <label for="venue">Venue:</label>
+              <input
+                type="text"
+                id="venue"
+                name="venue"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="">
+              <label for="type">Type:</label>
+              <input
+                type="text"
+                id="type"
+                name="type"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <div class="">
+          <label for="purpose">Purpose:</label>
+          <textarea
+            id="purpose"
+            name="purpose"
+            class="form-control"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <div class="">
+          <label for="images">Images:</label>
+          <input
+            type="file"
+            id="images"
+            name="images"
+            class="form-control"
+            multiple
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Create Event</button>
+      </form>
+    </div>
+
+    <div id="successMessage" style="display: none" class="alert alert-success">
+      Event created successfully!
+    </div>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("DOM fully loaded and parsed."); // Debug: Log when the DOM is ready
+
+    // Select the form first
+    const form = document.getElementById("createEventForm");
+    console.log("Form found:", form !== null); // Debug: Log whether the form is found
+
+    if (form) {
+    form.addEventListener("click", function (event) {
+      // Check if the clicked element is the addGoalButton
+      if (event.target === form.querySelector("#addGoalButton")) {
+        console.log("Add Goal Button clicked.");
+
+        // Create a new input element
+        const newInput = document.createElement("input");
+        newInput.type = "text";
+        newInput.name = "goals[]";
+        newInput.className = "form-control mb-2";
+        console.log("New input element created:", newInput);
+
+        // Append the new input to the goalsContainer
+        const goalsContainer = form.querySelector("#goals-container");
+        goalsContainer.appendChild(newInput);
+        console.log("New input element appended to Goals Container.");
+      }
+    });
+  });
+</script>
+
+  </body>
+</html>

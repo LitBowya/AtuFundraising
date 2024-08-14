@@ -4,10 +4,18 @@
 
 <body>
     <%- include('../partials/nav.ejs') %>
-    <div class="profile__container">
-        <h1>Profile Page</h1>
-        <p>Welcome, <%= user.username %>!</p>
+    <div class="profile__container container">
+        <div class="profile">
+            <div class="profile__left">
+                <img src="/<%= user.profilePicture %>" alt="Profile Picture">
+            </div>
+        <div class="profile__right">
+            <h3>Welcome, <%= user.username %>!</h3>
         <p>Name: <%= user.name %>
+        </p>
+        <p>Username: <%= user.username %>
+        </p>
+        <p>Phone Number: <%= user.phoneNumber %>
         </p>
         <p>Email: <%= user.email %>
         </p>
@@ -15,9 +23,6 @@
         </p>
         <p>Is Admin: <%= user.isAdmin %>
         </p>
-    
-        <img src="/<%= user.profilePicture %>" alt="Profile Picture">
-    
         <% if (user.isAlumni) { %>
             <div class="alumni__details">
                 <h2>Alumni Details</h2>
@@ -32,6 +37,11 @@
                 </p>
             </div>
             <% } %>
+        </div>
+
+
+
+
     </div>
 
 </body>

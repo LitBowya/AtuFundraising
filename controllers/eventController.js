@@ -1,11 +1,13 @@
 import Event from "../models/eventModel.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import logger from "../logger.js";
+import moment from "moment-timezone";
 
 const createEvent = asyncHandler(async (req, res) => {
-    const { title, description, date, venue, type, purpose } = req.body;
-    
-    const images = req.files.map((file) => `/${file.path}`);
+  const { title, description, date, time, venue, goals, type, purpose } =
+    req.body;
+
+  const images = req.files.map((file) => `/${file.path}`);
 
   try {
     const event = await Event.create({
@@ -13,17 +15,14 @@ const createEvent = asyncHandler(async (req, res) => {
       description,
       date,
       venue,
+      time,
+      goals,
       type,
       images,
       purpose,
     });
 
     logger.info(`Event ${event.title} created successfully`);
-    res.status(201).json({
-      success: true,
-      message: "Event created successfully",
-      data: event,
-    });
   } catch (error) {
     logger.error("Error creating event:", error);
     res.status(500).json({
@@ -35,19 +34,31 @@ const createEvent = asyncHandler(async (req, res) => {
 
 const getEvents = asyncHandler(async (req, res) => {
   try {
-      const events = await Event.find({}).sort({ date: -1 });
-      
-      if (!events) {
-          res.status(200).json({message: "Events not found"})
-      } else {
-          res.render('pages/EventsPage', {title: "Events Page", events})
-      }
+    const events = await Event.find({}).sort({ createdAt: -1 });
 
-    // res.status(200).json({
-    //   success: true,
-    //   message: "Events fetched successfully",
-    //   data: events,
-    // });
+    if (!events || events.length === 0) {
+      res.status(200).json({ message: "Events not found" });
+      return;
+    }
+
+    const currentDate = moment.tz("Africa/Accra").startOf("day");
+    const upcomingEvents = [];
+    const pastEvents = [];
+
+    events.forEach((event) => {
+      const eventDate = moment(event.date).startOf("day");
+      if (eventDate.isAfter(currentDate)) {
+        upcomingEvents.push(event);
+      } else {
+        pastEvents.push(event);
+      }
+    });
+
+    res.render("pages/EventsPage", {
+      title: "Events Page",
+      upcomingEvents,
+      pastEvents,
+    });
   } catch (error) {
     logger.error("Error fetching events:", error);
     res.status(500).json({
@@ -69,10 +80,9 @@ const getEventById = asyncHandler(async (req, res) => {
         message: "Event not found",
       });
     } else {
-      res.status(200).json({
-        success: true,
-        message: "Event fetched successfully",
-        data: event,
+      res.render("pages/EventsDetailsPage", {
+        title: "Event Details",
+        event: event,
       });
     }
   } catch (error) {

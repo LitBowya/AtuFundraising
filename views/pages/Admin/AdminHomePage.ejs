@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-    <% console.log(donations); %>
-    <%- include('../../partials/head.ejs') %>
-    <body>
-        <%- include('../../partials/nav.ejs') %>
-        <h1>Admin</h1>
-        <%- include('../../partials/Admin/createproject.ejs') %>
-        <%- include('../../partials/Admin/createevents.ejs') %>
-        <%- include('../../partials/Admin/alldonations.ejs', {donations}) %>
-    </body>
+  <%- include('../../partials/head.ejs') %>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <%- include('../../partials/Admin/nav.ejs') %> <%-
+      include('../../partials/Admin/sidebar.ejs') %> <%-
+      include('../../partials/Admin/mainpage.ejs', { projects, users, donations,
+      events, alumni, nonAlumni, totalDonationAmount, months, amounts }) %>
+    </div>
+  </body>
 </html>

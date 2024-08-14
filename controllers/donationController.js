@@ -17,14 +17,13 @@ const makeDonation = async (projectId, amount) => {
       throw new Error("Project not found");
     }
 
-    // Calculate new amountLeft based on the donation
-    const amountLeft = project.amountLeft - amount;
-    project.amountLeft = amountLeft < 0 ? 0 : amountLeft;
+    // Calculate new amountContributed based on the donation
+    project.amountContributed += amount;
 
     // Save updated project
     await project.save();
   } catch (error) {
-    console.error("Error updating project amountLeft:", error);
+    console.error("Error updating project amountContributed:", error);
     throw error;
   }
 };

@@ -1,30 +1,74 @@
 <hr />
 
-<section class="events container">
-  <header>
-    <h2 class="py-2 text-center">Latest Events</h2>
-  </header>
+<% function formatTime(time) {
+  const [hour, minute] = time.split(':');
+  let hourInt = parseInt(hour, 10);
+  const ampm = hourInt >= 12 ? 'PM' : 'AM';
+  hourInt = hourInt % 12 || 12; // Convert to 12-hour format and handle midnight
+  return `${hourInt}:${minute} ${ampm}`;
+} %>
 
-  <div class="events__cards">
-    <% events.slice(0,3).map((event)=> { %>
-    <div class="events__card-container">
-      <div class="events__card">
-        <div class="events__card-body" tabindex="0">
-          <img
-            src="<%= event.images[0]  %>"
-            class="events__card-image"
-            alt="<%= event.title %>"
-          />
-          <div class="events__card-footer">
-            <h6 class="events__card-title">Title: <%= event.title %></h6>
-          <p class="events__card-text">Venue <%= event.venue %></p>
-          <p class="events__card-text">Description <%= event.description %></p>
-          <p class="events__card-text">Type <%= event.type %></p>
-          <p class="events__card-text">Purpose <%= event.purpose %></p>
+<% function formatDate(date) {
+  const d = new Date(date);
+  const day = d.getDate();
+
+  // Determine the suffix for the day
+  const daySuffix = (day) => {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  };
+
+  // Format options for month and year
+  const options = { month: 'short', year: 'numeric' };
+
+  // Return formatted date with day suffix
+  return `${day}${daySuffix(day)} ${d.toLocaleDateString('en-US', options)}`;
+} %>
+
+
+
+<section class="events">
+  <div class="events__box container">
+    <div class="events__cards">
+      <% events.slice(0,3).map((event)=> { %>
+
+      <a href="/events/<%= event._id %>">
+        <div class="events__card-box">
+          <div class="events__card">
+            <div class="events__card-body" tabindex="0">
+              <img
+                src="<%= event.images[0]  %>"
+                class="events__card-image"
+                alt="<%= event.title %>"
+              />
+              <div class="events__card-footer">
+                <h6 class="events__card-title"><%= event.title %></h6>
+                <p class="events__card-text venue">Venue: <%= event.venue %></p>
+                <div class="events__time-and-date">
+                  <p class="events__card-text"><%= formatDate(event.date) %></p>
+                  <p class="events__card-text"><%= formatTime(event.time) %></p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
+      <% }); %>
     </div>
-    <% }); %>
+
+    <div class="events__right">
+      <header class="events__head">
+        <h2>Latest Events</h2>
+      </header>
+      <div class="events__right-text">
+        <span>Join Us</span> <span>&</span> <span> Make a Difference</span>
+      </div>
+      <span class="events__right-events">Upcoming Events</span>
+    </div>
   </div>
 </section>

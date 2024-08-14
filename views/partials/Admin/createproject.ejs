@@ -1,59 +1,67 @@
-<!-- createProject.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../head.ejs') %>
-<body>
-  <h1>Create Project</h1>
-  <form id="createProjectForm" action="/projects/create" method="POST" enctype="multipart/form-data">
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required><br>
+  <%- include('../head.ejs') %>
 
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" required></textarea><br>
+  <style>
+    .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding-top: 20px;
+      }
+    .button {
+      display: flex;
+      justify-content: flex-end;
 
-    <label for="goals">Goals:</label>
-    <textarea id="goals" name="goals" required></textarea><br>
+      .add {
+        background-color: rgb(28, 74, 126);
+        padding: 8px 12px;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+      }
 
-    <label for="timeline">Timeline:</label>
-    <input type="text" id="timeline" name="timeline" required><br>
+      tr {
+        transition: all 0.25s all;
+      }
 
-    <label for="budget">Budget:</label>
-    <input type="number" id="budget" name="budget" required><br>
+      tr:hover {
+        background-color: gray !important;
+      }
+    }
+  </style>
+  <body>
+    <div class="container py-4">
 
-    <label for="faculty">Faculty:</label>
-    <input type="text" id="faculty" name="faculty" required><br>
+      <h3>Projects</h3>
+      <!-- Projects Table -->
+      <table class="table mt-4">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Timeline</th>
+            <th>Budget</th>
+            <th>Faculty</th>
+            <th>Department</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% projects.forEach(project => { %>
+          <tr
+            onclick="window.location.href='/projects/<%= project._id %>';"
+            style="cursor: pointer"
+          >
+            <td><%= project.title %></td>
+            <td><%= project.timeline %></td>
+            <td>GHS <%= project.budget %></td>
+            <td><%= project.faculty %></td>
+            <td><%= project.department %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
 
-    <label for="department">Department:</label>
-    <input type="text" id="department" name="department" required><br>
-
-    <label for="images">Images:</label>
-    <input type="file" id="images" name="images" multiple accept="image/*"><br>
-
-    <button type="submit">Create Project</button>
-  </form>
-
-  <div id="infoMessage" style="display: none;">
-    <p>Project created successfully!</p>
-  </div>
-
-  <script>
-    document.getElementById('createProjectForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const formData = new FormData(this);
-      axios.post('/projects/create', formData)
-        .then(function(response) {
-          if (response.status === 201) {
-            // Show info message on success
-            document.getElementById('infoMessage').style.display = 'block';
-            document.getElementById('createProjectForm').reset(); // Optionally reset the form
-          }
-        })
-        .catch(function(error) {
-          console.error('Error creating project:', error);
-          // Handle error if needed
-        });
-    });
-  </script>
-</body>
+  </body>
 </html>

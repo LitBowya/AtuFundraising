@@ -122,7 +122,7 @@ app.get("/contact-us", (req, res) => {
   res.render("pages/ContactUsPage", { title: "Contact Us" });
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/donations", async (req, res) => {
   const donations = await Donation.find({})
     .populate({
       path: "userId",
@@ -133,7 +133,118 @@ app.get("/admin", async (req, res) => {
       select: "title description",
     });
 
-  res.render("pages/Admin/AdminHomePage", { title: "Admin", donations });
+  res.render("partials/Admin/alldonations", {
+    title: "All Donations",
+    donations,
+  });
+});
+
+app.get("/sales", async (req, res) => {
+  res.render("partials/Admin/mainpage", { title: "Sales" });
+});
+
+app.get("/admin", async (req, res) => {
+  try {
+    // Fetch all projects, users, events, etc.
+    const allProjects = await Project.find({});
+    const allUsers = await User.find({});
+    const allDonations = await Donation.find({});
+    const allEvents = await Event.find({});
+    const allAlumni = await User.find({ isAlumni: true });
+    const allNonAlumni = await User.find({ isAlumni: false });
+
+    // Calculate the total amount from donations
+    const [totalDonationResult] = await Donation.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: "$amount" },
+        },
+      },
+    ]);
+    const totalAmount = totalDonationResult
+      ? totalDonationResult.totalAmount
+      : 0;
+
+    // Aggregate donations by month
+    const monthlyData = {};
+    allDonations.forEach((donation) => {
+      const month = new Date(donation.date);
+      const monthYear = month.toLocaleString("default", {
+        month: "short",
+        year: "numeric",
+      });
+      if (!monthlyData[monthYear]) {
+        monthlyData[monthYear] = 0;
+      }
+      monthlyData[monthYear] += donation.amount;
+    });
+
+    // Prepare data for the chart
+    const months = Object.keys(monthlyData).sort(
+      (a, b) => new Date(a) - new Date(b)
+    ); // Chronological order
+    const amounts = months.map((month) => monthlyData[month]);
+
+    // Render the AdminHomePage view and pass chart data
+    res.render("pages/Admin/AdminHomePage", {
+      title: "Admin",
+      projects: allProjects,
+      users: allUsers,
+      donations: allDonations,
+      events: allEvents,
+      alumni: allAlumni,
+      nonAlumni: allNonAlumni,
+      totalDonationAmount: totalAmount,
+      months: months,
+      amounts: amounts,
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/events/fetchEvents", async (req, res) => {
+  try {
+    const events = await Event.find({}).sort({ createdAt: -1 });
+    res.render("partials/Admin/createevents", {
+      title: "Create Event",
+      events,
+    });
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    res.render("partials/Admin/createevents", {
+      title: "Create Event",
+      events: [],
+    });
+  }
+});
+
+app.get("/projects/create", async (req, res) => {
+  const projects = await Project.find({}).sort({ createdAt: -1 });
+  res.render("partials/Admin/createproject", {
+    title: "Create Project",
+    projects,
+  });
+});
+
+app.get("/users", async (req, res) => {
+  const users = await User.find({});
+  res.render("partials/Admin/allusers", {
+    title: "All Users",
+    users,
+  });
+});
+
+app.get("/events/createevents", async (req, res) => {
+  res.render("partials/Admin/createeventsform", { title: "Create Event Form" });
+});
+
+app.get("/projects/createproject", async (req, res) => {
+  res.render("partials/Admin/createprojectform", {
+    title: "Create Project Form",
+  });
 });
 
 // Handling routes

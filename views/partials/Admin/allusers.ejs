@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../head.ejs') %>
+  <style>
+    .img-fluid {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+    }
+    .search-box {
+      margin-bottom: 20px;
+    }
+
+    
+      .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding-top: 20px;
+      }
+
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <h3>All Users</h3>
+    <!-- Search Box -->
+    <input type="text" id="searchInput" class="form-control search-box" placeholder="Search by name...">
+
+    <div class="accordion" id="userAccordion">
+      <% users.forEach((user, index) => { %>
+      <div class="card user-card">
+        <div class="card-header" id="heading<%= index %>">
+          <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+              <img src="<%= user.profilePicture %>" alt="Profile Picture" class="img-fluid mr-5"> <span class="user-name"><%= user.name %></span>
+            </button>
+          </h5>
+        </div>
+
+        <div id="collapse<%= index %>" class="collapse" aria-labelledby="heading<%= index %>" data-parent="#userAccordion">
+          <div class="card-body">
+            <p><strong>User Name:</strong> <%= user.name %></p>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <p><strong>Phone Number:</strong> <%= user.phoneNumber %></p>
+            <p><strong>Is Alumni:</strong> <%= user.isAlumni ? 'Yes' : 'No' %></p>
+            <p><strong>Is Admin:</strong> <%= user.isAdmin ? 'Yes' : 'No' %></p>
+
+            <% if (user.isAlumni) { %>
+              <!-- Additional Details for Alumni -->
+              <p><strong>Graduation Year:</strong> <%= user.alumniDetails.yearOfGraduation%></p>
+              <p><strong>Degree:</strong> <%= user.alumniDetails.academicDegree %></p>
+              <p><strong>Faculty:</strong> <%= user.alumniDetails.faculty %></p>
+              <p><strong>Department:</strong> <%= user.alumniDetails.department %></p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const searchInput = document.getElementById('searchInput');
+
+      searchInput.addEventListener('keyup', function() {
+        const filter = searchInput.value.toLowerCase();
+        const userCards = document.querySelectorAll('.user-card');
+
+        userCards.forEach(card => {
+          const userName = card.querySelector('.user-name').textContent.toLowerCase();
+          if (userName.includes(filter)) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

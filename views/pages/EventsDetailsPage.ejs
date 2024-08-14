@@ -1,0 +1,145 @@
+<%- include('../partials/head.ejs') %>
+
+<% function formatTime(time) {
+  const [hour, minute] = time.split(':');
+  let hourInt = parseInt(hour, 10);
+  const ampm = hourInt >= 12 ? 'PM' : 'AM';
+  hourInt = hourInt % 12 || 12; // Convert to 12-hour format and handle midnight
+  return `${hourInt}:${minute} ${ampm}`;
+} %>
+
+<% function formatDate(date) {
+  const d = new Date(date);
+  const day = d.getDate();
+  const daySuffix = (day) => {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  };
+  const options = { month: 'short', year: 'numeric' };
+  return `${day}${daySuffix(day)} ${d.toLocaleDateString('en-US', options)}`;
+} %>
+
+<html>
+  <body>
+    <%- include('../partials/nav.ejs') %>
+    <section class="event-details">
+      <% if (event) { %>
+      <div class="event__details">
+        <% if (event.images && event.images.length> 0) { %>
+        <div class="event__details-top">
+          <div class="event__details-top-left">
+            <img
+              src="<%= event.images[0] %>"
+              alt=""
+              class="img-fluid mb-3 main-event-image w-100"
+              id="maineventImage"
+            />
+          </div>
+          <% } %>
+
+          <div class="event__details-top-right">
+            <h1><%= event.title %></h1>
+            <h3>@ <%= event.venue %></h3>
+            <p>
+              <span>Date:</span>
+              <%= formatDate(event.date) %>
+            </p>
+            <p>
+                <span>Time:</span>
+              <%= formatTime(event.time) %>
+            </p>
+            <p>
+                <span>Type:</span>
+              <%= event.type %>
+            </p>
+
+          </div>
+        </div>
+
+        <div class="event__details-middle">
+          <div class="event__details-middle-left">
+
+          <p>
+            <span>Description: </span>
+            <%= event.description %>
+          </p>
+          <p>
+            <span>Purpose: </span>
+            <%= event.purpose %>
+          </p>
+         <p>
+            <span>Goals:</span>
+            <ul>
+                <% event.goals.forEach(function(goal) { %>
+                <li><%= goal %></li>
+                <% }) %>
+            </ul>
+        </p>
+          </div>
+          <div class="event__details-middle-right">
+            <img
+              src="<%= event.images[1] %>"
+              alt=""
+              class="img-fluid mb-3 main-event-image w-100"
+              id="maineventImage"
+            />
+          </div>
+
+        </div>
+
+        <div class="event__details-down">
+          <% if (event.images && event.images.length > 0) { %> <%
+          event.images.forEach(function(image) { %>
+          <div>
+            <img
+            src="<%= image %>"
+            alt="event Image"
+            class=""
+          />
+          </div>
+          <% }); %> <% } %>
+        </div>
+      </div>
+
+      <% } else { %>
+      <p>No event details found.</p>
+      <% } %>
+    </section>
+
+    <%- include('../partials/footer.ejs') %>
+
+    <!-- Loader -->
+    <div id="loader" class="loader">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <style>
+      .event-images img {
+        max-width: 100px;
+        height: auto;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+      }
+
+      .loader {
+        position: fixed;
+        z-index: 9999;
+        background-color: rgba(255, 255, 255, 0.5);
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+
+  </body>
+</html>

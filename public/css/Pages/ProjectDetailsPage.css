@@ -1,0 +1,177 @@
+@import url("../style.css");
+
+.project-details {
+  background-color: white;
+  position: relative;
+
+  .project__details-top {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1574%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='rgba(255%2c 255%2c 255%2c 1)'%3e%3c/rect%3e%3cpath d='M646.47 196.14 a114.96 114.96 0 1 0 229.92 0 a114.96 114.96 0 1 0 -229.92 0z' fill='rgba(208%2c 167%2c 59%2c 0.42)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M394.25 375.89 a135.75 135.75 0 1 0 271.5 0 a135.75 135.75 0 1 0 -271.5 0z' fill='rgba(208%2c 167%2c 59%2c 0.42)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M1207.92 204.81 a147.56 147.56 0 1 0 295.12 0 a147.56 147.56 0 1 0 -295.12 0z' fill='rgba(208%2c 167%2c 59%2c 0.42)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M1330.5514887160075 33.84235262999296L1371.2553133246017 159.11584352793244 1455.8249796139469-6.8614719786013225z' fill='rgba(208%2c 167%2c 59%2c 0.42)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M1109.8 67.54 a170.27 170.27 0 1 0 340.54 0 a170.27 170.27 0 1 0 -340.54 0z' fill='rgba(208%2c 167%2c 59%2c 0.42)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M16.39 236.59 a116.69 116.69 0 1 0 233.38 0 a116.69 116.69 0 1 0 -233.38 0z' fill='rgba(208%2c 167%2c 59%2c 0.42)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M244.73792294194766 236.21292907373945L343.0589699327581 225.87897061924969 234.4039644874579 137.891882082929z' fill='rgba(208%2c 167%2c 59%2c 0.42)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M582.0603770492633 10.476547014937982L488.9284215816141-34.946942703499076 536.6368873308262 103.60850248258713z' fill='rgba(208%2c 167%2c 59%2c 0.42)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M1160.0510545911156 459.0949027203453L1323.790156732341 424.2910821582698 1288.9863361702655 260.55198001704434 1125.24723402904 295.35580057911983z' fill='rgba(208%2c 167%2c 59%2c 0.42)' class='triangle-float1'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1574'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3cstyle%3e %40keyframes float1 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-10px%2c 0)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float1 %7b animation: float1 5s infinite%3b %7d %40keyframes float2 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-5px%2c -5px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float2 %7b animation: float2 4s infinite%3b %7d %40keyframes float3 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(0%2c -10px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float3 %7b animation: float3 6s infinite%3b %7d %3c/style%3e%3c/defs%3e%3c/svg%3e");
+    background-size: cover;
+    padding: 50px 150px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+
+    @media (max-width: 768px) {
+      padding: 25px;
+      flex-direction: column;
+    }
+
+    .project__details-top-left {
+      flex: 1;
+      img {
+        height: 450px;
+      }
+    }
+
+    .project__details-top-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+      gap: 10px;
+
+      h1 {
+        margin: 0;
+        padding: 0;
+        font-weight: 300;
+        letter-spacing: 3px;
+        text-wrap: wrap;
+        word-wrap: wrap;
+        font-family: "Poppins", sans-serif;
+        color: var(--primary-yellow);
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5), -1px -1px 3px rgba(255, 255, 255, 0.7);
+      }
+
+      p {
+        margin: 0;
+        padding: 0;
+        font-size: 1rem;
+        font-weight: 400;
+        text-wrap: wrap;
+        word-wrap: wrap;
+        font-family: "Poppins", sans-serif;
+
+        span{
+            text-decoration: underline;
+            font-weight: 600;
+        }
+      }
+
+      p:nth-child(2) {
+        font-size: 1.25rem;
+        color: var(--primary-blue);
+        font-style: italic;
+      }
+
+      p:nth-child(3) {
+        margin-top: -10px;
+        font-size: 1.25rem;
+        color: var(--primary-blue);
+        font-style: italic;
+      }
+
+      .buttons {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+
+        button {
+          padding: 10px;
+          border: none;
+          transition: 0.25s linear;
+
+          &:hover {
+            transform: translateY(-5px);
+          }
+        }
+
+        button:nth-child(1) {
+          background-color: var(--primary-blue);
+          color: white;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        button:nth-child(2) {
+          background-color: var(--primary-yellow);
+          color: white;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .project__details-middle {
+    padding: 50px 150px;
+    background-color: #eee;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 30px;
+    align-items: center;
+
+    .project__details-middle-left {
+      flex: 1;
+
+      p span {
+        font-weight: 900;
+      }
+
+      p {
+        font-style: italic;
+      }
+
+      ul li {
+        list-style: disc;
+        font-style: italic;
+      }
+    }
+
+    .project__details-middle-right {
+      flex: 1;
+
+      img {
+        height: 450px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      & {
+        padding: 25px;
+        flex-direction: column;
+      }
+    }
+  }
+
+  .project__details-down {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    background-color: white;
+    padding-block: 25px;
+
+    div {
+      width: 300px;
+      height: 250px;
+      max-width: 100%;
+      max-height: 100%;
+      cursor: pointer;
+      transition: 0.25s linear;
+
+      img {
+        width: 100%;
+        height: 100%;
+        transition: 0.25s linear;
+
+        &:hover {
+          transform: scale(1.1) translateY(-10px);
+        }
+      }
+    }
+  }
+}

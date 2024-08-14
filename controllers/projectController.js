@@ -74,8 +74,16 @@ const getProjectDetails = asyncHandler(async (req, res) => {
 
 const createProject = asyncHandler(async (req, res) => {
   try {
-    const { title, description, goals, timeline, budget, faculty, department } =
-      req.body;
+    const {
+      title,
+      description,
+      purpose,
+      goals,
+      timeline,
+      budget,
+      faculty,
+      department,
+    } = req.body;
 
     // Extracting the paths of uploaded images
     const images = req.files.map((file) => `/${file.path}`);
@@ -84,26 +92,24 @@ const createProject = asyncHandler(async (req, res) => {
       title,
       description,
       goals,
+      purpose,
       timeline,
       budget,
-      progress: 0, // Initialize progress to 0%
-      amountLeft: budget, // Initialize amountLeft to budget
+      amountContributed: 0, // Initialize amountContributed to 0
       faculty,
       department,
       images,
     });
 
-    const savedProject = await newProject.save();
+      const savedProject = await newProject.save();
+      
     logger.info("Project created successfully:", savedProject);
-    res.status(201).json({
-      status: "success",
-      message: "Project created successfully",
-      data: savedProject,
-    });
+
+    return res.redirect("/admin");
   } catch (error) {
     logger.error("Error creating project:", error);
     res.status(500).json({ message: "Error creating project" });
   }
 });
 
-export { getAllProjects,getFilterOptions, getProjectDetails, createProject };
+export { getAllProjects, getFilterOptions, getProjectDetails, createProject };

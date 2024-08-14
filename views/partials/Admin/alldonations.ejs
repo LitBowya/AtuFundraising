@@ -1,32 +1,84 @@
-<h1>All donations</h1>
-<ul>
-  <% donations.map(donation=> { %>
-  <li>
-    <strong>Donation ID:</strong>
-    <%= donation._id %><br />
-    <strong>User ID:</strong>
-    <%= donation.userId._id %><br />
-    <strong>User Name:</strong>
-    <%= donation.userId.name %><br />
-    <strong>User Profile Picture:</strong>
-    <img src=<%= donation.userId.profilePicture %> alt=""><br />
-    <strong>Project ID:</strong>
-    <%= donation.projectId._id %><br />
-    <strong>Project Title:</strong>
-    <%= donation.projectId.title %><br />
-    <strong>Project Description:</strong>
-    <%= donation.projectId.description %><br />
-    <strong>Amount:</strong>
-    <%= donation.amount %><br />
-    <strong>Date:</strong>
-    <%= donation.date %><br />
-    <strong>Created At:</strong>
-    <%= donation.createdAt %><br />
-    <strong>Updated At:</strong>
-    <%= donation.updatedAt %><br />
-    <strong>__v:</strong>
-    <%= donation.__v %><br />
-  </li>
-  <br />
-  <% }) %>
-</ul>
+<% function formatTime(time) {
+  const [hour, minute] = time.split(':');
+  let hourInt = parseInt(hour, 10);
+  const ampm = hourInt >= 12 ? 'PM' : 'AM';
+  hourInt = hourInt % 12 || 12; // Convert to 12-hour format and handle midnight
+  return `${hourInt}:${minute} ${ampm}`;
+} %>
+
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../head.ejs') %>
+  <style>
+    .img-fluid {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .search-box {
+      margin-bottom: 20px;
+    }
+
+    
+      .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding-top: 20px;
+      }
+
+  </style>
+  <body>
+    <div class="container pt-4">
+      <h1>All Donations</h1>
+      <!-- Search Box -->
+      <input type="text" id="searchInput" class="form-control search-box" placeholder="Search by user name...">
+
+      <div class="accordion" id="donationAccordion">
+        <% donations.forEach((donation, index) => { %>
+        <div class="card donation-card">
+          <div class="card-header" id="heading<%= index %>">
+            <h5 class="mb-0">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+                <img src="<%= donation.userId.profilePicture %>" alt="Profile Picture" class="img-fluid mr-3">
+                <span class="user-name"><%= donation.userId.name %></span>
+                - <span class="donation-amount">$<%= donation.amount %></span>
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapse<%= index %>" class="collapse" aria-labelledby="heading<%= index %>" data-parent="#donationAccordion">
+            <div class="card-body">
+              <p><strong>User Name:</strong> <%= donation.userId.name %></p>
+              <p><strong>Project Title:</strong> <%= donation.projectId.title %></p>
+              <p><strong>Project Description:</strong> <%= donation.projectId.description %></p>
+              <p><strong>Amount:</strong> $<%= donation.amount %></p>
+              <p><strong>Date:</strong> <%= donation.date %></p>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById('searchInput');
+
+        searchInput.addEventListener('keyup', function() {
+          const filter = searchInput.value.toLowerCase();
+          const donationCards = document.querySelectorAll('.donation-card');
+
+          donationCards.forEach(card => {
+            const userName = card.querySelector('.user-name').textContent.toLowerCase();
+            if (userName.includes(filter)) {
+              card.style.display = "";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

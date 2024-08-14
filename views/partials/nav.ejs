@@ -2,33 +2,87 @@
 <html lang="en">
   <%- include("../partials/head.ejs") %>
 
-  <body>
-    <nav class="nav">
-      <a href="/" class="nav__logo">
-        <img src="/images/atulogo.jpg" alt="" class="" />
-      </a>
-      <div class="nav__menu">
-        <ul class="nav__link">
-          <li><a href="/about" class="nav__link-list">About Us</a></li>
-          <li><a href="/events" class="nav__link-list">Events</a></li>
-          <li><a href="/projects" class="nav__link-list">Projects</a></li>
-          <li><a href="/contact-us" class="nav__link-list">Contact Us</a></li>
+  <style>
+    .nav__menu {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav__link {
+      list-style: none;
+      display: flex;
+      padding-left: 0;
+      margin: 0;
+    }
+    .nav__link li {
+      margin: 0 10px;
+    }
 
-        </ul>
-        <i class="fa-solid fa-bars fa-lg text-white"></i>
-        <% const titlesToShow=['Project Details', 'Profile Page' ]; %> <% if
+    .nav__profile-picture {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 10px;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .show {
+      display: block;
+    }
+  </style>
+
+  <body>
+    <nav class="nav top-fixed">
+      <a href="/">
+        <img src="/images/atulogo.jpg" alt="" class="logo" />
+      </a>
+      <input type="checkbox" id="nav-check" />
+      <div class="nav-header"></div>
+      <div class="nav-btn">
+        <label for="nav-check">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+      </div>
+
+      <div class="nav-links">
+        <a href="/about" class="nav__link-list">About Us</a>
+        <a href="/events" class="nav__link-list">Events</a>
+        <a href="/projects" class="nav__link-list">Projects</a>
+        <a href="/contact-us" class="nav__link-list">Contact Us</a>
+        <% const titlesToShow=['Project Details', 'Profile Page', 'Event Details' ]; %> <% if
         (!titlesToShow.includes(title)) { %>
-        <div class="nav__register" id="navRegister">
+        <span class="nav__register nav__link-list" id="navRegister">
           <!-- Placeholder for dynamic content -->
           <% titlesToShow.forEach((item)=> { %>
           <p><%= item %></p>
           <% }); %>
-        </div>
+        </span>
         <% } %>
       </div>
     </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
         try {
@@ -48,16 +102,16 @@
 
             // Dropdown menu items
             const dropdownMenu = `
-                        <div class="dropdown-content" id="dropdownContent">
-                            <a href="/users/profile">Profile</a>
-                            <a href="#" id="logoutButton">Logout</a>
-                            ${
-                              data.isAdmin
-                                ? '<a href="/admin" id="adminDropdownLink">Admin</a>'
-                                : ""
-                            }
-                        </div>
-                    `;
+              <div class="dropdown-content" id="dropdownContent">
+                <a href="/users/profile">Profile</a>
+                <a href="#" id="logoutButton">Logout</a>
+                ${
+                  data.isAdmin
+                    ? '<a href="/admin" id="adminDropdownLink">Admin</a>'
+                    : ""
+                }
+              </div>
+            `;
             navRegister.insertAdjacentHTML("beforeend", dropdownMenu);
 
             // Toggle dropdown on profile picture click
@@ -117,39 +171,5 @@
         }
       });
     </script>
-
-    <style>
-      .nav__profile-picture {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        right: 10px;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-      }
-
-      .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-      }
-
-      .dropdown-content a:hover {
-        background-color: #f1f1f1;
-      }
-
-      .show {
-        display: block;
-      }
-    </style>
   </body>
 </html>

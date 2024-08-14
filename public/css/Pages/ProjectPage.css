@@ -1,0 +1,140 @@
+@import url("../style.css");
+
+.project__page__container {
+  position: relative;
+    background-color: white;
+    border-radius: 15px;
+
+
+  .projects__page {
+    padding-block: 1em;
+    border-radius: 15px;
+    z-index: 2;
+    position: relative;
+
+    header {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+
+      h2 {
+        color: var(--primary-blue);
+      }
+
+      @media (max-width:800px) {
+        &{
+            font-size: 1.125rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+      }
+    }
+
+    .filter__modal{
+        font-size: 0.95rem;
+        font-family: 'Roboto';
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .projects__cards {
+      display: flex;
+      justify-content: start;
+      gap: 30px;
+
+      .projects__card {
+        padding: 0;
+        width: 300px;
+        border: 1px solid rgb(222, 222, 222);
+        transition: 0.5s all;
+
+        &:hover {
+          filter: none;
+          transform: translateY(-10px);
+        }
+
+        .card__image {
+          width: 100%;
+          overflow: hidden;
+          height: 200px;
+          filter: grayscale(15);
+        }
+
+        &:hover .card__image {
+          filter: none;
+        }
+
+        .project__card-content {
+          margin-top: -50px;
+          padding: 25px 15px;
+          background-color: white;
+          clip-path: polygon(0 24%, 100% 0%, 100% 100%, 0% 100%);
+
+          p {
+            margin: 0;
+          }
+
+          .project__card-amount {
+            font-size: 1rem;
+            color: var(--primary-blue);
+            font-weight: 900;
+            text-align: end;
+          }
+
+          .project__card-title {
+            font-family: "Poppins";
+            font-size: 1.25rem;
+            color: var(--primary-yellow);
+          }
+
+          .project__card-text {
+            color: var(--primary-blue);
+          }
+
+          .project__card-department {
+            font-size: 13px;
+            text-align: end;
+            color: var(--primary-yellow);
+          }
+        }
+      }
+    }
+  }
+
+  header {
+    display: flex;
+    justify-content: start;
+    margin-bottom: 15px;
+
+    h4 {
+      color: var(--primary-blue);
+      text-align: start;
+    }
+  }
+
+  .filter-form {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    border-radius: 5px;
+    padding: 15px 10px;
+    margin-top: 15px;
+  }
+}
+
+  .filter-button {
+    padding: 5px !important;
+    background: var(--primary-blue);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    display: inline-block;
+    transition: 0.25s linear;
+
+    &:hover {
+      background: var(--primary-yellow);
+      color: white;
+    }
+  }

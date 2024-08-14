@@ -4,21 +4,22 @@ const projectSchema = new mongoose.Schema(
   {
     title: String,
     description: String,
-    goals: String,
+    goals: {
+      type: [String],
+      required: true,
+    },
     timeline: String,
+    purpose: String,
     budget: {
       type: Number,
       required: true,
       min: 0,
     },
-    amountLeft: {
+    amountContributed: {
       type: Number,
       min: 0,
-      default: function () {
-        return this.budget;
-      },
+      default: 0,
     },
-    
     faculty: String,
     department: String,
     images: [],

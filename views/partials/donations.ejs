@@ -1,11 +1,30 @@
-<hr>
+<hr />
 <section class="donations container">
-  <header>
-    <h2><span>Top</span> Donors</h2>
-  </header>
-  <div class="row g-4 donation__cards">
+  <div class="donations__left">
+    <header>
+      <h2><span>Top</span> Donors</h2>
+    </header>
+    <div class="sub__texts">
+      <p>
+        We extend our deepest gratitude to our remarkable supporters who have
+        made a significant impact on our fundraising efforts. Their generosity
+        helps us advance our mission and create opportunities for students at
+        Accra Technical University.
+      </p>
+      <p>
+        Your contributions make a difference, and we are honored to recognize
+        and celebrate our top donors who have shown exceptional commitment to
+        our cause.
+      </p>
+      <p>
+        Thank you for being a part of our community and for supporting the
+        future of our students.
+      </p>
+    </div>
+  </div>
+  <div class="donation__cards-container">
     <% topDonors.map((donor)=> { %>
-    <div class="col-md-3">
+    <div class="donation__cards">
       <div class="donation__card">
         <div class="donation__card-body">
           <img
@@ -15,7 +34,9 @@
           />
           <div class="donation__card-footer">
             <h6 class="donation__card-title m-0"><%= donor.user.name %></h6>
-            <p class="donation__card-text m-0">GHS <%= donor.totalDonation %></p>
+            <p class="donation__card-text m-0">
+              GHS <%= donor.totalDonation %>
+            </p>
           </div>
         </div>
       </div>
@@ -23,3 +44,4 @@
     <% }); %>
   </div>
 </section>
+

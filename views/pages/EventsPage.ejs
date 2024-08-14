@@ -1,29 +1,89 @@
+<% function formatTime(time) { const [hour, minute] = time.split(':'); let
+hourInt = parseInt(hour, 10); const ampm = hourInt >= 12 ? 'PM' : 'AM'; hourInt
+= hourInt % 12 || 12; return `${hourInt}:${minute} ${ampm}`; } %>
+
 <!DOCTYPE html>
 <html lang="en">
-<%- include("../partials/head.ejs")  %>
+  <%- include("../partials/head.ejs") %>
 
-<body>
-    <%- include('../partials/nav.ejs') %>
-    <%- include('../partials/header.ejs') %>
-    <h1>Events Page</h1>
+  <body>
+    <%- include('../partials/nav.ejs') %> <%- include('../partials/header.ejs')
+    %>
 
-    <ul>
-        <% events.forEach(event=> { %>
-            <li>
-                <img src=<%= event.images[0]  %> alt="">
-                <h2>
-                    <%= event.title %>
-                </h2>
-                <p>
-                    <%= event.description %>
-                </p>
-                <p>Date: <%= event.date.toDateString() %>
-                </p>
-                <p>Venue: <%= event.venue %>
-                </p>
-            </li>
-            <% }); %>
-    </ul>
+    <div class="container-fluid events__page-container">
+      <header>
+        <h2><%= title %></h2>
+      </header>
+
+      <!-- <a ></a> -->
+
+      <div class="upcoming__events">
+        <div class="events__left">
+          <header>
+            <h4><span>Upcoming</span> Events</h4>
+          </header>
+          <span class="quote"
+            >Do not follow where the path may lead.<br />
+            Go instead where there is no path and leave a trail.</span
+          >
+          <span> – Ralph Waldo Emerson</span>
+        </div>
+        <div class="events__cards">
+          <% upcomingEvents.forEach(event => { %>
+          <a href="/events/<%= event._id %>">
+            <div class="event__card">
+              <span class="event__tag">UPCOMING</span>
+              <img class="event__img" src="<%= event.images[0] %>" alt="" />
+              <div class="events__card-footer">
+                <h6 class="events__card-title"><%= event.title %></h6>
+                <p class="events__card-text venue">Venue: <%= event.venue %></p>
+                <div class="events__time-and-date">
+                  <p class="events__card-text">
+                    <%= event.date.toDateString() %>
+                  </p>
+                  <p class="events__card-text"><%= formatTime(event.time) %></p>
+                </div>
+              </div>
+            </div>
+          </a>
+          <% }) %>
+        </div>
+      </div>
+
+      <div class="past__events">
+        <div class="events__left">
+          <header>
+            <h4><span>Past</span> Events</h4>
+          </header>
+          <span class="quote"
+            >We do not remember days,<br />
+            we remember moments.</span
+          >
+          <span>– Cesare Pavese</span>
+        </div>
+        <div class="events__cards">
+          <% pastEvents.forEach(event => { %>
+          <a href="/events/<%= event._id %>">
+            <div class="event__card">
+              <span class="event__tag">PAST</span>
+              <img class="event__img" src="<%= event.images[0] %>" alt="" />
+              <div class="events__card-footer">
+                <h6 class="events__card-title"><%= event.title %></h6>
+                <p class="events__card-text venue">Venue: <%= event.venue %></p>
+                <div class="events__time-and-date">
+                  <p class="events__card-text">
+                    <%= event.date.toDateString() %>
+                  </p>
+                  <p class="events__card-text"><%= formatTime(event.time) %></p>
+                </div>
+              </div>
+            </div>
+          </a>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+
     <%- include('../partials/footer.ejs') %>
-</body>
+  </body>
 </html>

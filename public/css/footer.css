@@ -1,45 +1,70 @@
 @import url("./style.css");
 
-footer{
-    background-color: black;
-    width: 100vw !important;
-    padding-block: 15px;
+footer {
+  background-color: black;
+  width: 100vw !important;
+  padding-block: 15px;
 
-    .footer__socials{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 20px;
-        padding: 20px 0;
-        color: white;
-        font-size: 20px;
-        font-weight: bold;
-        text-decoration: none;
-        transition: all 0.3s ease-in-out;
+  .footer__socials {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
 
-        .social-icons{
-            background: linear-gradient(to right, var(--primary-blue), var(--primary-yellow));
-            background-clip: text;
-            color: transparent;
-            transition: all 0.3s ease-in-out;
-            text-decoration: none;
-            display: flex;
-            gap: 18px;
+    .social-icons {
+      background: linear-gradient(
+        to right,
+        var(--primary-blue),
+        var(--primary-yellow)
+      );
+      background-clip: text;
+      color: transparent;
+      transition: all 0.3s ease-in-out;
+      text-decoration: none;
+      display: flex;
+      gap: 18px;
 
-            a{
-                color: transparent;
-                transition: .5s ease-in-out;
-            }
-        }
+      a {
+        color: transparent;
+        transition: 0.5s ease-in-out;
+      }
+    }
+  }
 
+  ul {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 25px;
 
+    li {
+      transition: 0.25s linear;
     }
 
-    span{
-        color: white;
-        font-size: 20px;
-        font-weight: bold;
-        display: block;
-        text-align: center;
+    a {
+      color: white;
+      padding: 2px;
     }
+
+    li:hover {
+      background-color: white;
+      a {
+        color: black;
+      }
+    }
+  }
+
+  span {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+  }
 }

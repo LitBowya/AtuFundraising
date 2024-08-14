@@ -2,13 +2,25 @@
 
 .mission {
   text-align: center;
+  clip-path: polygon(0 10%, 100% 0%, 100% 85%, 0% 100%);
+  background-color: var(--primary-blue);
+  padding-block: 5rem;
+    margin-top: -7rem !important;
+  padding-bottom: 30rem !important;
+
+  h1{
+    color: white;
+    padding-top: 2rem;
+  }
 
   .fa-crosshairs {
-    font-size: 2rem;
+    font-size: 2rem !important;
+    color: var(--primary-yellow);
   }
 
   .mission__aim-text {
-    font-size: 1.2rem;
+    font-size: 1.2rem !important;
+    color: white;
   }
 
   .mission__content-aim {
@@ -18,7 +30,7 @@
     gap: 30px;
 
     @media (max-width: 800px) {
-      &{
+      & {
         flex-direction: column;
       }
     }
@@ -29,14 +41,22 @@
 
       .mission__header {
         background-color: var(--primary-blue);
+        border: 1px solid var(--primary-yellow);
         color: var(--primary-yellow);
         border-radius: 10px;
         padding-block: 10px;
       }
 
+      .mission__contennt-info{
+        border: 1px solid var(--primary-yellow);
+        border-radius: 10px;
+        color: white;
+      }
+
       .fa-solid {
-        font-size: 1.75rem;
+        font-size: 1.75rem !important;
         padding-block: 10px;
+        color: white;
       }
     }
 
@@ -51,8 +71,19 @@
         padding-block: 10px;
       }
 
+      .vision__content-info{
+        background-color: var(--primary-yellow);
+        border-radius: 10px;
+        color: var(--primary-blue);
+
+        p{
+            padding-inline: 0.75rem;
+            padding-bottom: 0.95rem !important;
+        }
+      }
+
       .fa-solid {
-        font-size: 1.75rem;
+        font-size: 1.75rem !important;
         padding-block: 10px;
       }
     }

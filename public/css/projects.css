@@ -1,9 +1,15 @@
 @import url("./style.css");
 
 .projects {
-  background-color: white;
   padding-block: 1em;
   border-radius: 15px;
+  margin-top: -30rem;
+  z-index: 2;
+  position: relative;
+
+  hr{
+    background: var(--primary-yellow) !important;
+  }
   header {
     display: flex;
     justify-content: center;
@@ -11,15 +17,9 @@
     margin-bottom: 15px;
 
     h2 {
-      background: linear-gradient(
-        to left,
-        var(--primary-blue),
-        var(--primary-yellow)
-      );
-      background-clip: text;
-      color: transparent;
-      display: inline;
-      text-align: center;
+      color: var(--primary-yellow);
+      text-align: start;
+
     }
   }
 
@@ -37,14 +37,12 @@
       &:hover {
         filter: none;
         transform: translateY(-10px);
-        box-shadow: -5px -5px 0 var(--primary-blue);
-        box-shadow: 5px 5px 0 var(--primary-yellow);
-      }
+    }
 
       .card__image {
         width: 100%;
         overflow: hidden;
-        height: 180px;
+        height: 200px;
         filter: grayscale(15);
       }
 
@@ -53,20 +51,36 @@
       }
 
       .project__card-content {
-        padding: 10px 15px;
+        margin-top: -50px;
+        padding: 25px 15px;
+        background-color: white;
+        clip-path: polygon(0 24%, 100% 0%, 100% 100%, 0% 100%);
 
         p {
           margin: 0;
         }
 
+        .project__card-amount{
+          font-size: 1rem;
+          color: var(--primary-blue);
+          font-weight: 900;
+          text-align: end;
+        }
+
         .project__card-title {
           font-family: "Poppins";
-          font-size: 1.5rem;
+          font-size: 1.25rem;
           color: var(--primary-yellow);
         }
 
         .project__card-text {
           color: var(--primary-blue);
+        }
+
+        .project__card-department{
+            font-size: 13px;
+            text-align: end;
+            color: var(--primary-yellow);
         }
       }
     }

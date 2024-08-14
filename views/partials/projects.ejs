@@ -1,5 +1,5 @@
-<hr>
 <section class="projects container">
+  <hr />
   <header>
     <h2 class="py-2 text-center">Latest Projects</h2>
   </header>
@@ -15,12 +15,10 @@
         />
       </a>
       <div class="project__card-content">
+        <p class="project__card-amount">GHS <%= project.budget %></p>
         <p class="project__card-title"><%= project.title %></p>
-        <p class="project__card-text">
-           <%= project.description %>
-        </p>
-        <a href="/projects/<%= project._id %>" class=""
-          >View Project</a>
+        <a href="/projects/<%= project._id %>" class="">View Project</a>
+        <p class="project__card-department"><%= project.department %></p>
       </div>
     </div>
     <% }) %> <% } else { %>

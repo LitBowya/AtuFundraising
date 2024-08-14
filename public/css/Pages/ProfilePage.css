@@ -1,0 +1,33 @@
+@import url("../style.css");
+
+.profile__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden !important;
+
+  .profile{
+    margin-block: 15px;
+    border-radius: 15px;
+    padding: 25px;
+    max-width: 1440px;
+    background: white;
+    display: flex;
+    gap: 25px;
+    align-items: start;
+
+    @media (max-width: 800px) {
+        &{
+            flex-direction: column;
+        }
+    }
+
+    .profile__left{
+        flex: 1;
+    }
+
+    .profile__right{
+        flex: 3;
+    }
+  }
+}

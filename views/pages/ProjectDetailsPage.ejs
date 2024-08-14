@@ -3,41 +3,58 @@
 <html>
   <body>
     <%- include('../partials/nav.ejs') %>
-    <section class="project-details container">
-      <h2>Project Details</h2>
-
+    <section class="project-details">
       <% if (project) { %>
-      <div class="row">
-        <!-- Left Column for Project Image -->
-        <div class="col-md-4">
-          <% if (project.images && project.images.length> 0) { %>
-          <img
-            src="<%= project.images[0] %>"
-            alt=""
-            class="img-fluid mb-3 main-project-image w-100"
-            id="mainProjectImage"
-          />
+      <div class="project__details">
+        <% if (project.images && project.images.length> 0) { %>
+        <div class="project__details-top">
+          <div class="project__details-top-left">
+            <img
+              src="<%= project.images[0] %>"
+              alt=""
+              class="img-fluid mb-3 main-project-image w-100"
+              id="mainProjectImage"
+            />
+          </div>
           <% } %>
 
-          <!-- Additional Images Carousel -->
-          <div class="project-images">
-            <% project.images.forEach((image, index)=> { %>
-            <img
-              src="<%= image %>"
-              alt="Project Image"
-              class="img-thumbnail mr-2 mb-2 additional-project-image"
-              style="width: 100px; height: auto"
-              data-index="<%= index %>"
-              onclick="changeMainImage(this)"
-            />
-            <% }) %>
+          <div class="project__details-top-right">
+            <h1><%= project.title %></h1>
+            <p>
+              <span>Budget:</span>
+               GHS <%= project.budget %>
+            </p>
+            <p>
+              GHS <%= project.amountContributed / 100 %>
+              <span>Raised </span>
+            </p>
+
+            <div class="buttons">
+              <!-- Donate Button -->
+              <button
+                id="donateButton"
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#donateModal"
+              >
+                Donate
+              </button>
+
+              <!-- Verify Button -->
+              <button
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#verifyModal"
+              >
+                Verify Donation
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- Right Column for Project Details -->
-        <div class="col-md-8">
-          <h3><%= project.title %></h3>
-          <p>
+        <div class="project__details-middle">
+          <div class="project__details-middle-left">
+            <p>
             <span>Faculty: </span>
             <%= project.faculty %>
           </p>
@@ -45,43 +62,46 @@
             <span>Department: </span>
             <%= project.department %>
           </p>
-          <p>
-            <span>Budget: GHS </span>
-            <%= project.budget %>
-          </p>
-          <p>
-            <span>Amount Left: GHS </span>
-            <%= project.amountLeft %>
-          </p>
+
           <p>
             <span>Description: </span>
             <%= project.description %>
           </p>
           <p>
-            <span>Goals: </span>
-            <%= project.goals %>
+            <span>Purpose: </span>
+            <%= project.purpose %>
           </p>
+         <p>
+            <span>Goals:</span>
+            <ul>
+                <% project.goals.forEach(function(goal) { %>
+                <li><%= goal %></li>
+                <% }) %>
+            </ul>
+        </p>
+          </div>
+          <div class="project__details-middle-right">
+            <img
+              src="<%= project.images[1] %>"
+              alt=""
+              class="img-fluid mb-3 main-project-image w-100"
+              id="mainProjectImage"
+            />
+          </div>
 
-          <!-- Donate Button -->
-          <button
-            id="donateButton"
-            type="button"
-            class="btn btn-primary mt-3"
-            data-bs-toggle="modal"
-            data-bs-target="#donateModal"
-          >
-            Donate
-          </button>
+        </div>
 
-          <!-- Verify Button -->
-          <button
-            type="button"
-            class="btn btn-secondary mt-3"
-            data-bs-toggle="modal"
-            data-bs-target="#verifyModal"
-          >
-            Verify Donation
-          </button>
+        <div class="project__details-down">
+          <% if (project.images && project.images.length > 0) { %> <%
+          project.images.forEach(function(image) { %>
+          <div>
+            <img
+            src="<%= image %>"
+            alt="Project Image"
+            class=""
+          />
+          </div>
+          <% }); %> <% } %>
         </div>
       </div>
 
@@ -89,6 +109,8 @@
       <p>No project details found.</p>
       <% } %>
     </section>
+
+    <%- include('../partials/footer.ejs') %>
 
     <!-- Donate Modal -->
     <div
@@ -214,6 +236,5 @@
       }
     </style>
 
-    <!-- <script src="/js/ProjectDetailsPage.js"></script> -->
   </body>
 </html>

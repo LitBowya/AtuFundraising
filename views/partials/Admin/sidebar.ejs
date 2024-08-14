@@ -1,0 +1,230 @@
+
+
+<style>
+.sidebar{
+    background-color: rgb(208, 167, 59);
+    overflow: hidden;
+
+    .user-info{
+        overflow: hidden;
+        display: flex;
+        gap: 10px;
+        justify-content: center !important;
+        align-items: center !important;
+        padding-block: 5px;
+
+        img{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        span{
+            color: white;
+        }
+    }
+
+    nav{
+        height: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+
+        .nav-links{
+        padding-left: 0;
+
+        .nav-item{
+            display: block;
+            transition: 0.25s all;
+            margin-block: 5px;
+
+            &:hover{
+                background-color: rgb(28, 74, 126);
+                color: white;
+                border-radius: 5px;
+            }
+
+            .nav-link{
+                transition: all 0.25s ease-in;
+            }
+
+            &:hover .nav-link{
+                transform: translateX(10px);
+            }
+        }
+
+        .nav-link.active{
+            background-color: rgb(28, 74, 126);
+            color: white;
+            border-radius: 5px;
+            font-weight: 600;
+            /* transform: translateX(10px); */
+        }
+
+        .nav-link{
+            color: white;
+        }
+    }
+
+    .logout-button{
+        background-color: rgb(28, 74, 126);
+        color: rgb(208, 167, 59);
+        cursor: pointer;
+        transition: 0.25s ease-in;
+        border-radius: 5px;
+
+        .nav-link{
+            display: inline-block;
+            transition: all 0.25s ease-in;
+        }
+
+        &:hover{
+            background-color: rgb(142, 7, 7);
+            color: white;
+        }
+
+        &:hover .nav-link{
+            transform: translateX(10px);
+        }
+    }
+    }
+
+}
+</style>
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- User Panel -->
+    <div class="user-panel d-flex align-items-center">
+      <div class="user-info d-flex align-items-center">
+        <img src="" alt="Profile" id="profile-picture" class="img-fluid" />
+        <span id="user-name" class="ml-2"></span>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav-links">
+        <li class="nav-item ">
+          <a href="/admin" class="nav-link active">
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" data-url="/donations">
+            <span>Donations</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" data-url="/projects/create">
+            <span>Projects</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" data-url="/events/fetchEvents">
+            <span>Events</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" data-url="/users">
+            <span>Users</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link" data-url="/events/createevents">
+            <span>Create Events</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link" data-url="/projects/createproject">
+            <span>Create Project</span>
+          </a>
+        </li>
+      </ul>
+      <!-- Logout Button -->
+    <div class="logout-button mt-3">
+      <span id="logoutButton" title="Logout" class="nav-link">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </span>
+    </div>
+    </nav>
+
+
+  </div>
+  <!-- /.sidebar -->
+</aside>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async function () {
+    // Handle sidebar link clicks
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    navLinks.forEach(link => {
+      link.addEventListener("click", function () {
+        // Remove the 'active' class from all links
+        navLinks.forEach(link => link.classList.remove("active"));
+
+        // Add the 'active' class to the clicked link
+        this.classList.add("active");
+
+        // Optionally: Load content dynamically or change page content here
+        const url = this.getAttribute("data-url");
+      });
+    });
+
+    // Fetch user profile data
+    try {
+      const response = await axios.get("/users/profile", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${document.cookie.split("=")[1]}`,
+        },
+      });
+
+      const data = response.data.user;
+      const profilePicture = document.getElementById("profile-picture");
+      const userName = document.getElementById("user-name");
+
+      if (data && data.profilePicture) {
+        profilePicture.src = data.profilePicture;
+        userName.textContent = data.name || "Admin";
+      } else {
+        profilePicture.src = "";
+        userName.textContent = "No Profile";
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      // Handle errors or fallback behavior
+    }
+
+    // Logout Button Event Listener
+    document
+      .getElementById("logoutButton")
+      .addEventListener("click", function () {
+        axios
+          .post(
+            "/users/logout",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${document.cookie.split("=")[1]}`,
+              },
+            }
+          )
+          .then(() => {
+            window.location.href = "/login";
+          })
+          .catch((error) => {
+            console.error("Error logging out:", error);
+          });
+      });
+
+  });
+</script>
+
+
+</body>
+</html>
