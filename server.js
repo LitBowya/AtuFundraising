@@ -9,29 +9,36 @@ import { config } from "dotenv";
 // Importing database and needed security files
 import database from "./config/config.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+import trackVisits from "./middleware/trackVisits.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// importing routes
+// Importing routes
 import userRoutes from "./routes/userRoutes.js";
 import donationRoutes from "./routes/donationRoutes.js";
 import paystackRoutes from "./routes/paystackRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
+import visitRoutes from "./routes/visitsRoutes.js";
 
+// Importing models
 import Project from "./models/projectModel.js";
 import Donation from "./models/donationModel.js";
 import User from "./models/userModel.js";
 import Event from "./models/eventModel.js";
 
+// Importing logger
 import logger from "./logger.js";
 
 config();
 const app = express();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Connect to database
 await database();
+
+// Middleware to log visits (placed before routes)
+app.use(trackVisits);
 
 // Middleware for parsing request bodies
 app.use(bodyParser.json());
@@ -166,26 +173,6 @@ app.get("/admin", async (req, res) => {
       ? totalDonationResult.totalAmount
       : 0;
 
-    // Aggregate donations by month
-    const monthlyData = {};
-    allDonations.forEach((donation) => {
-      const month = new Date(donation.date);
-      const monthYear = month.toLocaleString("default", {
-        month: "short",
-        year: "numeric",
-      });
-      if (!monthlyData[monthYear]) {
-        monthlyData[monthYear] = 0;
-      }
-      monthlyData[monthYear] += donation.amount;
-    });
-
-    // Prepare data for the chart
-    const months = Object.keys(monthlyData).sort(
-      (a, b) => new Date(a) - new Date(b)
-    ); // Chronological order
-    const amounts = months.map((month) => monthlyData[month]);
-
     // Render the AdminHomePage view and pass chart data
     res.render("pages/Admin/AdminHomePage", {
       title: "Admin",
@@ -196,8 +183,6 @@ app.get("/admin", async (req, res) => {
       alumni: allAlumni,
       nonAlumni: allNonAlumni,
       totalDonationAmount: totalAmount,
-      months: months,
-      amounts: amounts,
     });
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -247,12 +232,44 @@ app.get("/projects/createproject", async (req, res) => {
   });
 });
 
+app.get("/dashboard/data", async (req, res) => {
+  const allDonations = await Donation.find({});
+
+  // Aggregate donations by month
+  const monthlyData = {};
+  allDonations.forEach((donation) => {
+    const month = new Date(donation.date);
+    const monthYear = month.toLocaleString("default", {
+      month: "short",
+      year: "numeric",
+    });
+    if (!monthlyData[monthYear]) {
+      monthlyData[monthYear] = 0;
+    }
+    monthlyData[monthYear] += donation.amount;
+  });
+
+  // Prepare data for the chart
+  const months = Object.keys(monthlyData).sort(
+    (a, b) => new Date(a) - new Date(b)
+  ); // Chronological order
+  const amounts = months.map((month) => monthlyData[month]);
+
+  // Fetch the data you need
+  const data = {
+    months,
+    amounts,
+  };
+  res.json(data);
+});
+
 // Handling routes
 app.use("/users", userRoutes);
 app.use("/donations", donationRoutes);
 app.use("/paystack", paystackRoutes);
 app.use("/projects", projectRoutes);
 app.use("/events", eventRoutes);
+app.use("/dashboard", visitRoutes);
 
 // Error handling middleware
 app.use(notFound);

@@ -11,15 +11,12 @@
     .search-box {
       margin-bottom: 20px;
     }
-
-    
-      .container {
-        width: 80%;
-        max-width: 800px;
-        margin: 0 auto;
-        padding-top: 20px;
-      }
-
+    .container {
+      width: 80%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -60,25 +57,5 @@
       <% }) %>
     </div>
   </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const searchInput = document.getElementById('searchInput');
-
-      searchInput.addEventListener('keyup', function() {
-        const filter = searchInput.value.toLowerCase();
-        const userCards = document.querySelectorAll('.user-card');
-
-        userCards.forEach(card => {
-          const userName = card.querySelector('.user-name').textContent.toLowerCase();
-          if (userName.includes(filter)) {
-            card.style.display = "";
-          } else {
-            card.style.display = "none";
-          }
-        });
-      });
-    });
-  </script>
 </body>
 </html>

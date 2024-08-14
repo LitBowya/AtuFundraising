@@ -3,10 +3,10 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import logger from "../logger.js";
 import moment from "moment-timezone";
 
+// Create a new event
 const createEvent = asyncHandler(async (req, res) => {
   const { title, description, date, time, venue, goals, type, purpose } =
     req.body;
-
   const images = req.files.map((file) => `/${file.path}`);
 
   try {
@@ -14,8 +14,8 @@ const createEvent = asyncHandler(async (req, res) => {
       title,
       description,
       date,
-      venue,
       time,
+      venue,
       goals,
       type,
       images,
@@ -23,6 +23,7 @@ const createEvent = asyncHandler(async (req, res) => {
     });
 
     logger.info(`Event ${event.title} created successfully`);
+    res.status(201).json({ success: true, event });
   } catch (error) {
     logger.error("Error creating event:", error);
     res.status(500).json({
@@ -32,13 +33,13 @@ const createEvent = asyncHandler(async (req, res) => {
   }
 });
 
+// Get all events, sorted by most recent
 const getEvents = asyncHandler(async (req, res) => {
   try {
     const events = await Event.find({}).sort({ createdAt: -1 });
 
     if (!events || events.length === 0) {
-      res.status(200).json({ message: "Events not found" });
-      return;
+      return res.status(200).json({ message: "No events found" });
     }
 
     const currentDate = moment.tz("Africa/Accra").startOf("day");
@@ -68,6 +69,7 @@ const getEvents = asyncHandler(async (req, res) => {
   }
 });
 
+// Get a single event by ID
 const getEventById = asyncHandler(async (req, res) => {
   const eventId = req.params.id;
 
@@ -75,16 +77,16 @@ const getEventById = asyncHandler(async (req, res) => {
     const event = await Event.findById(eventId);
 
     if (!event) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: "Event not found",
       });
-    } else {
-      res.render("pages/EventsDetailsPage", {
-        title: "Event Details",
-        event: event,
-      });
     }
+
+    res.render("pages/EventsDetailsPage", {
+      title: "Event Details",
+      event,
+    });
   } catch (error) {
     logger.error(`Error fetching event with ID ${eventId}:`, error);
     res.status(500).json({
@@ -94,4 +96,75 @@ const getEventById = asyncHandler(async (req, res) => {
   }
 });
 
-export { createEvent, getEvents, getEventById };
+// Edit an existing event
+const editEvent = asyncHandler(async (req, res) => {
+  const eventId = req.params.id;
+  const { title, description, date, time, venue, goals, type, purpose } =
+    req.body;
+  const images = req.files
+    ? req.files.map((file) => `/${file.path}`)
+    : undefined;
+
+  try {
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+      return res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+
+    event.title = title || event.title;
+    event.description = description || event.description;
+    event.date = date || event.date;
+    event.time = time || event.time;
+    event.venue = venue || event.venue;
+    event.goals = goals || event.goals;
+    event.type = type || event.type;
+    event.purpose = purpose || event.purpose;
+    if (images) {
+      event.images = images;
+    }
+
+    await event.save();
+
+    logger.info(`Event ${event.title} updated successfully`);
+    res.status(200).json({ success: true, event });
+  } catch (error) {
+    logger.error(`Error updating event with ID ${eventId}:`, error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+});
+
+// Delete an event
+const deleteEvent = asyncHandler(async (req, res) => {
+  const eventId = req.params.id;
+
+  try {
+    const event = await Event.findByIdAndDelete(eventId);
+
+    if (!event) {
+      return res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+
+    logger.info(`Event ${event.title} deleted successfully`);
+    res
+      .status(200)
+      .json({ success: true, message: "Event deleted successfully" });
+  } catch (error) {
+    logger.error(`Error deleting event with ID ${eventId}:`, error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+});
+
+export { createEvent, getEvents, getEventById, editEvent, deleteEvent };

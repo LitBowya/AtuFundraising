@@ -3,37 +3,37 @@
   <%- include('../head.ejs') %>
 
   <style>
-    .container {
-        width: 80%;
-        max-width: 800px;
-        margin: 0 auto;
-        padding-top: 20px;
-      }
-    .button {
-      display: flex;
-      justify-content: flex-end;
 
-      .add {
-        background-color: rgb(28, 74, 126);
-        padding: 8px 12px;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-      }
+    tr {
+      transition: all 0.25s all;
+    }
 
-      tr {
-        transition: all 0.25s all;
-      }
+    tr:hover {
+      background-color: gray !important;
+    }
 
-      tr:hover {
-        background-color: gray !important;
-      }
+    .edit-project {
+      background-color: rgb(54, 162, 235);
+      padding: 4px 8px;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 0 4px;
+    }
+
+    .delete-project {
+      padding: 4px 8px;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 0 4px;
+      background-color: rgb(255, 99, 132);
     }
   </style>
   <body>
     <div class="container py-4">
-
       <h3>Projects</h3>
       <!-- Projects Table -->
       <table class="table mt-4">
@@ -44,24 +44,34 @@
             <th>Budget</th>
             <th>Faculty</th>
             <th>Department</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <% projects.forEach(project => { %>
-          <tr
-            onclick="window.location.href='/projects/<%= project._id %>';"
-            style="cursor: pointer"
-          >
-            <td><%= project.title %></td>
+          <tr>
+            <td
+              onclick="window.location.href='/projects/<%= project._id %>';"
+              style="cursor: pointer"
+            >
+              <%= project.title %>
+            </td>
             <td><%= project.timeline %></td>
             <td>GHS <%= project.budget %></td>
             <td><%= project.faculty %></td>
             <td><%= project.department %></td>
+            <td class="d-flex g-2 align-items-center">
+              <a href="#" class="edit-project" data-id="<%= project._id %>"
+                >Edit</a
+              >
+              <a href="#" class="delete-project" data-id="<%= project._id %>"
+                >Delete</a
+              >
+            </td>
           </tr>
           <% }) %>
         </tbody>
       </table>
     </div>
-
   </body>
 </html>

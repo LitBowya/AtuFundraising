@@ -33,18 +33,21 @@
         background-color: gray;
       }
 
-      .button {
-        display: flex;
-        justify-content: end;
-      }
-
-      .add {
-        padding: 8px 12px;
-        background-color: rgb(28, 74, 126);
+      .edit, .delete {
+        padding: 4px 8px;
         color: white;
         border-radius: 5px;
         cursor: pointer;
         text-decoration: none;
+        margin: 0 4px;
+      }
+
+      .edit {
+        background-color: rgb(54, 162, 235);
+      }
+
+      .delete {
+        background-color: rgb(255, 99, 132);
       }
 
       #create-event-section {
@@ -64,46 +67,27 @@
             <th>Time</th>
             <th>Type</th>
             <th>Venue</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <% events.forEach(event => { %>
-          <tr onclick="window.location.href='/events/<%= event._id %>'">
+          <tr>
             <td><%= event.title %></td>
-            <td><%= event.date.toDateString() %></td>
+            <td><%= formatDate(event.date) %></td>
             <td><%= formatTime(event.time) %></td>
             <td><%= event.type %></td>
             <td><%= event.venue %></td>
+            <td>
+              <a href="#" class="edit" data-id="<%= event._id %>">Edit</a>
+              <a href="#" class="delete" data-id="<%= event._id %>">Delete</a>
+            </td>
           </tr>
           <% }) %>
         </tbody>
       </table>
 
-      <!-- Section where the form will be loaded -->
-      <div id="create-event-section"></div>
-
-
     </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const addEventLink = document.querySelector('.add');
-        const createEventSection = document.getElementById('create-event-section');
-
-        addEventLink.addEventListener('click', function (event) {
-          event.preventDefault();
-          const url = this.getAttribute('data-url');
-          if (url) {
-            // Use AJAX to load the form content
-            fetch(url)
-              .then(response => response.text())
-              .then(html => {
-                createEventSection.innerHTML = html;
-              })
-              .catch(error => console.error('Error loading form:', error));
-          }
-        });
-      });
-    </script>
   </body>
 </html>

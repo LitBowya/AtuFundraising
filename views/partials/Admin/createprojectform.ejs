@@ -14,9 +14,6 @@
       <h2>Create Project</h2>
       <form
         id="createProjectForm"
-        method="POST"
-        action="/projects/create"
-        enctype="multipart/form-data"
       >
         <label for="title">Title:</label>
         <input
@@ -36,13 +33,15 @@
         ></textarea
         ><br />
 
-        <label for="goals">Goals:</label>
-        <div id="goals-container">
-          <input type="text" name="goals[]" class="form-control mb-2" />
+        <div class="">
+          <label for="goals">Goals:</label>
+          <div class="projectGoals">
+            <input type="text" name="goals[]" class="form-control mb-2" />
+          </div>
+          <button type="button" class="btn btn-secondary addProjectGoal">
+            Add Another Goal
+          </button>
         </div>
-        <button type="button" class="btn btn-secondary" id="addGoalButton">
-          Add Another Goal
-        </button>
 
         <div class="row">
           <div class="col-6">
@@ -113,23 +112,9 @@
       </form>
     </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const addGoalButton = document.getElementById("addGoalButton");
-        const goalsContainer = document.getElementById("goals-container");
+    <div id="successMessage" style="display: none" class="alert alert-success">
+      Project created successfully!
+    </div>
 
-        if (addGoalButton && goalsContainer) {
-          addGoalButton.addEventListener("click", function () {
-            const newInput = document.createElement("input");
-            newInput.type = "text";
-            newInput.name = "goals[]";
-            newInput.className = "form-control mb-2";
-            goalsContainer.appendChild(newInput);
-          });
-        } else {
-          console.error("Add Goal button or Goals container not found");
-        }
-      });
-    </script>
   </body>
 </html>

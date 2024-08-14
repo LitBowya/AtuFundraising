@@ -3,10 +3,19 @@
   <%- include('../../partials/head.ejs') %>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-      <%- include('../../partials/Admin/nav.ejs') %> <%-
-      include('../../partials/Admin/sidebar.ejs') %> <%-
-      include('../../partials/Admin/mainpage.ejs', { projects, users, donations,
-      events, alumni, nonAlumni, totalDonationAmount, months, amounts }) %>
+      <%- include('../../partials/Admin/nav.ejs') %>
+      <%- include('../../partials/Admin/sidebar.ejs') %>
+      <span>
+        <%- include('../../partials/Admin/mainpage.ejs', {
+        projects: projects,
+        users: users,
+        donations: donations,
+        events: events,
+        alumni: alumni,
+        nonAlumni: nonAlumni,
+        totalDonationAmount: totalDonationAmount,
+      }) %>
+      </span>
     </div>
   </body>
 </html>

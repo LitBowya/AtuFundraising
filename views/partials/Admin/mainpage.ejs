@@ -1,20 +1,73 @@
-<body>
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Dashboard</h1>
+        </div>
+      </div>
+
+      <h2>Summary</h2>
+      <div class="parent">
+        <!-- Top row with 4 items -->
+        <div class="summary-item div1">
+          <i class="fas fa-project-diagram"></i>
+          <div class="summary-info">
+            <p>Total Projects</p>
+            <span><%= projects ? projects.length : 0 %></span>
+          </div>
+        </div>
+        <div class="summary-item div2">
+          <i class="fas fa-users"></i>
+          <div class="summary-info">
+            <p>Total Users</p>
+            <span><%= users ? users.length : 0 %></span>
+          </div>
+        </div>
+        <div class="summary-item div3">
+          <i class="fas fa-donate"></i>
+          <div class="summary-info">
+            <p>Total Donations</p>
+            <span><%= donations ? donations.length : 0 %></span>
+          </div>
+        </div>
+        <div class="summary-item div4">
+          <i class="fas fa-calendar-alt"></i>
+          <div class="summary-info">
+            <p>Total Events</p>
+            <span><%= events ? events.length : 0 %></span>
           </div>
         </div>
 
-        <h2>Summary</h2>
-        <p>Total Projects: <%= projects ? projects.length : 0 %></p>
-        <p>Total Users: <%= users ? users.length : 0 %></p>
-        <p>Total Donations: <%= totalDonationAmount %></p>
+        <!-- Bottom row with 3 items -->
+        <div class="summary-item div5">
+          <i class="fas fa-user-graduate"></i>
+          <div class="summary-info">
+            <p>Total Alumni</p>
+            <span><%= alumni ? alumni.length : 0 %></span>
+          </div>
+        </div>
+        <div class="summary-item div6">
+          <i class="fas fa-user"></i>
+          <div class="summary-info">
+            <p>Total Non-Alumni</p>
+            <span><%= nonAlumni ? nonAlumni.length : 0 %></span>
+          </div>
+        </div>
+        <div class="summary-item div7">
+          <i class="fas fa-dollar-sign"></i>
+          <div class="summary-info">
+            <p>Total Donations Amount</p>
+            <span><%= totalDonationAmount %></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bar chart canvas -->
+      <div class="chart-container row">
+        <canvas id="donationChart" class="col-md-6"></canvas>
+        <canvas id="visitsChart" class="col-md-6"></canvas>
       </div>
     </div>
-    <!-- /.content-header -->
   </div>
-</body>
+</div>

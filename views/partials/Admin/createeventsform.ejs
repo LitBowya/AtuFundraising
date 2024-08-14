@@ -10,7 +10,7 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="container py-4">
       <h2>Create Event</h2>
       <form
         id="createEventForm"
@@ -127,35 +127,6 @@
       Event created successfully!
     </div>
 
-    <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM fully loaded and parsed."); // Debug: Log when the DOM is ready
-
-    // Select the form first
-    const form = document.getElementById("createEventForm");
-    console.log("Form found:", form !== null); // Debug: Log whether the form is found
-
-    if (form) {
-    form.addEventListener("click", function (event) {
-      // Check if the clicked element is the addGoalButton
-      if (event.target === form.querySelector("#addGoalButton")) {
-        console.log("Add Goal Button clicked.");
-
-        // Create a new input element
-        const newInput = document.createElement("input");
-        newInput.type = "text";
-        newInput.name = "goals[]";
-        newInput.className = "form-control mb-2";
-        console.log("New input element created:", newInput);
-
-        // Append the new input to the goalsContainer
-        const goalsContainer = form.querySelector("#goals-container");
-        goalsContainer.appendChild(newInput);
-        console.log("New input element appended to Goals Container.");
-      }
-    });
-  });
-</script>
 
   </body>
 </html>
