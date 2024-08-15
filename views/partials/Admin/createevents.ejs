@@ -42,10 +42,6 @@
         margin: 0 4px;
       }
 
-      .edit {
-        background-color: rgb(54, 162, 235);
-      }
-
       .delete {
         background-color: rgb(255, 99, 132);
       }
@@ -73,13 +69,15 @@
         <tbody>
           <% events.forEach(event => { %>
           <tr>
-            <td><%= event.title %></td>
+            <td
+              onclick="window.location.href='/events/<%= event._id %>';"
+              style="cursor: pointer"
+            ><%= event.title %></td>
             <td><%= formatDate(event.date) %></td>
             <td><%= formatTime(event.time) %></td>
             <td><%= event.type %></td>
             <td><%= event.venue %></td>
             <td>
-              <a href="#" class="edit" data-id="<%= event._id %>">Edit</a>
               <a href="#" class="delete" data-id="<%= event._id %>">Delete</a>
             </td>
           </tr>

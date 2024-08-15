@@ -28,7 +28,7 @@ const createEvent = asyncHandler(async (req, res) => {
     logger.error("Error creating event:", error);
     res.status(500).json({
       success: false,
-      message: "Server Error",
+      message: "Error creating event",
     });
   }
 });

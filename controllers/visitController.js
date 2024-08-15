@@ -3,11 +3,12 @@ import Visit from "../models/visitModel.js";
 const getMonthlyVisits = async (req, res) => {
   try {
     const start = new Date();
-    start.setDate(1); // Start from the first day of the current month
+    start.setMonth(0); // January
+    start.setDate(1);
     start.setHours(0, 0, 0, 0);
 
     const end = new Date(start);
-    end.setMonth(start.getMonth() + 1); // Go to the first day of the next month
+    end.setFullYear(start.getFullYear() + 1); // End of the current year
 
     const visits = await Visit.aggregate([
       {

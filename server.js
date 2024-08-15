@@ -37,9 +37,6 @@ const __dirname = path.dirname(__filename);
 // Connect to database
 await database();
 
-// Middleware to log visits (placed before routes)
-app.use(trackVisits);
-
 // Middleware for parsing request bodies
 app.use(bodyParser.json());
 app.use(express.json());
@@ -47,6 +44,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware for parsing cookies
 app.use(cookieParser());
+
+// Middleware to log visits (placed before routes)
+app.use(trackVisits);
 
 // Setting ejs templating engine
 app.set("view engine", "ejs");
@@ -159,6 +159,8 @@ app.get("/admin", async (req, res) => {
     const allEvents = await Event.find({});
     const allAlumni = await User.find({ isAlumni: true });
     const allNonAlumni = await User.find({ isAlumni: false });
+    const donations = await Donation.find({}).sort({ createdAt: -1 });
+    const latestEvents = await Event.find({}).sort({ createdAt: -1 });
 
     // Calculate the total amount from donations
     const [totalDonationResult] = await Donation.aggregate([
@@ -173,6 +175,33 @@ app.get("/admin", async (req, res) => {
       ? totalDonationResult.totalAmount
       : 0;
 
+    // Calculate total amount donated by each user
+    const userDonations = {};
+
+    donations.forEach((donation) => {
+      if (!userDonations[donation.userId]) {
+        userDonations[donation.userId] = 0;
+      }
+      userDonations[donation.userId] += donation.amount;
+    });
+
+    // Create an array of users with their total donations
+    const topDonors = [];
+    for (const userId in userDonations) {
+      const user = await User.findById(userId);
+      if (user) {
+        topDonors.push({
+          user,
+          totalDonation: userDonations[userId],
+        });
+      } else {
+        logger.debug(`User that is having the ID ${userId} not found.`);
+      }
+    }
+
+    // Sort users based on total donations (highest to lowest)
+    topDonors.sort((a, b) => b.totalDonation - a.totalDonation);
+
     // Render the AdminHomePage view and pass chart data
     res.render("pages/Admin/AdminHomePage", {
       title: "Admin",
@@ -183,6 +212,8 @@ app.get("/admin", async (req, res) => {
       alumni: allAlumni,
       nonAlumni: allNonAlumni,
       totalDonationAmount: totalAmount,
+      topDonors,
+      latestEvents,
     });
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -233,34 +264,47 @@ app.get("/projects/createproject", async (req, res) => {
 });
 
 app.get("/dashboard/data", async (req, res) => {
-  const allDonations = await Donation.find({});
+  try {
+    const start = new Date();
+    start.setMonth(0); // January
+    start.setDate(1);
+    start.setHours(0, 0, 0, 0);
 
-  // Aggregate donations by month
-  const monthlyData = {};
-  allDonations.forEach((donation) => {
-    const month = new Date(donation.date);
-    const monthYear = month.toLocaleString("default", {
-      month: "short",
-      year: "numeric",
+    const end = new Date(start);
+    end.setFullYear(start.getFullYear() + 1); // End of the current year
+
+    const allDonations = await Donation.find({
+      date: { $gte: start, $lt: end },
     });
-    if (!monthlyData[monthYear]) {
-      monthlyData[monthYear] = 0;
-    }
-    monthlyData[monthYear] += donation.amount;
-  });
 
-  // Prepare data for the chart
-  const months = Object.keys(monthlyData).sort(
-    (a, b) => new Date(a) - new Date(b)
-  ); // Chronological order
-  const amounts = months.map((month) => monthlyData[month]);
+    const monthlyData = {};
+    allDonations.forEach((donation) => {
+      const month = new Date(donation.date);
+      const monthYear = month.toLocaleString("default", {
+        month: "short",
+        year: "numeric",
+      });
+      if (!monthlyData[monthYear]) {
+        monthlyData[monthYear] = 0;
+      }
+      monthlyData[monthYear] += donation.amount;
+    });
 
-  // Fetch the data you need
-  const data = {
-    months,
-    amounts,
-  };
-  res.json(data);
+    // Prepare data for the chart
+    const months = Object.keys(monthlyData).sort(
+      (a, b) => new Date(a) - new Date(b)
+    ); // Chronological order
+    const amounts = months.map((month) => monthlyData[month]);
+
+    const data = {
+      months,
+      amounts,
+    };
+    res.json(data);
+  } catch (error) {
+    console.error("Error fetching donations:", error);
+    res.status(500).json({ message: "Error fetching donations" });
+  }
 });
 
 // Handling routes

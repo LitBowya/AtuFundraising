@@ -1,6 +1,6 @@
 /* Ensure the container takes up full width */
-.container-fluid {
-  padding: 0;
+.main-content{
+    margin-inline: 20px;
 }
 
 /* Grid layout for summary items */
@@ -8,55 +8,117 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
-  margin-bottom: 20px;
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+  padding-bottom: 20px;
 }
 
 /* Specific grid areas for each item */
-.div1 { grid-area: 1 / 1 / 2 / 2; }
-.div2 { grid-area: 1 / 2 / 2 / 3; }
-.div3 { grid-area: 1 / 3 / 2 / 4; }
-.div4 { grid-area: 1 / 4 / 2 / 5; }
-.div5 { grid-area: 2 / 1 / 3 / 2; }
-.div6 { grid-area: 2 / 2 / 3 / 4; }
-.div7 { grid-area: 2 / 4 / 3 / 5; }
+.div1 {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.div2 {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.div3 {
+  grid-area: 1 / 3 / 2 / 4;
+}
+.div4 {
+  grid-area: 1 / 4 / 2 / 5;
+}
+.div5 {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.div6 {
+  grid-area: 2 / 2 / 3 / 4;
+}
+.div7 {
+  grid-area: 2 / 4 / 3 / 5;
+}
 
 /* Style each summary item */
 .summary-item {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  display: flex !important;
+  gap: 25px;
+  align-items: center !important;
+  background-color: #fff !important;
+  padding: 15px !important;
+  border-radius: 5px !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.39) !important;
+  text-align: start !important;
 }
 
-.summary-item i {
-  font-size: 2rem;
-  margin-right: 10px;
+.summary-item .icon{
+    border: 1px solid white !important;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(225, 225, 225, 0.5);
 }
 
 .summary-info p {
   margin: 0;
   font-weight: bold;
+  color: white;
 }
 
 .summary-info span {
   display: block;
-  font-size: 1.5rem;
-  margin-top: 5px;
+  font-size: 1.25rem;
+  color: white;
 }
 
 /* Colors for different summary items */
-.div1 { background-color: #f8d7da; /* Light red */ }
-.div2 { background-color: #d4edda; /* Light green */ }
-.div3 { background-color: #cce5ff; /* Light blue */ }
-.div4 { background-color: #fff3cd; /* Light yellow */ }
-.div5 { background-color: #e2e3e5; /* Light gray */ }
-.div6 { background-color: #f5c6cb; /* Light pink */ }
-.div7 { background-color: #d1e7dd; /* Light teal */ }
+.div1 {
+  background-color: #ff4c5b !important;
+}
+.div2 {
+  background-color: #23e751 !important;
+}
+.div3 {
+  background-color: #1f82eb !important;
+}
+.div4 {
+  background-color: #ffc916 !important;
+}
+.div5 {
+  background-color: #1a356c !important;
+}
+.div6 {
+  background-color: #5e262b !important;
+}
+.div7 {
+  background-color: #146742 !important;
+}
+
+/* Colors for different iconss */
+.icon1 {
+  background-color: #d12b39c9 !important;
+  color: white;
+}
+.icon2 {
+  background-color: #15a837 !important;
+  color: white;
+}
+.icon3 {
+  background-color: #0b529d !important;
+  color: white;
+}
+.icon4 {
+  background-color: #b98f05 !important;
+  color: white;
+}
+.icon5 {
+  background-color: #072258 !important;
+  color: white;
+}
+.icon6 {
+  background-color: #631219 !important;
+  color: white;
+}
+.icon7 {
+  background-color: #07663b89 !important;
+  color: white;
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -66,11 +128,82 @@
   }
 
   /* Adjust grid areas on small screens */
-  .div1 { grid-area: 1 / 1 / 2 / 2; }
-  .div2 { grid-area: 1 / 2 / 2 / 3; }
-  .div3 { grid-area: 2 / 1 / 3 / 2; }
-  .div4 { grid-area: 2 / 2 / 3 / 3; }
-  .div5 { grid-area: 3 / 1 / 4 / 2; }
-  .div6 { grid-area: 3 / 2 / 4 / 3; }
-  .div7 { grid-area: 4 / 1 / 5 / 3; }
+  .div1 {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+  .div2 {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+  .div3 {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+  .div4 {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+  .div5 {
+    grid-area: 3 / 1 / 4 / 2;
+  }
+  .div6 {
+    grid-area: 3 / 2 / 4 / 3;
+  }
+  .div7 {
+    grid-area: 4 / 1 / 5 / 3;
+  }
+}
+
+.chart-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    .donation{
+        background-color: white;
+        flex: 2;
+        height: 450px;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .visits{
+        background-color: white;
+        flex: 1;
+        height: 450px;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+}
+
+.donors-events{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 15px;
+
+    .latestEvents{
+        flex: 2;
+        background-color: white;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .donors{
+        flex: 1;
+        background-color: white;
+        padding: 15px;
+        border-radius: 15px;
+
+        .card-body{
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 10px;
+
+            img{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+        }
+    }
 }

@@ -3,7 +3,7 @@ import Visit from "../models/visitModel.js";
 // Middleware to track visits
 const trackVisits = async (req, res, next) => {
   try {
-    const visitCookie = req.cookies.visitLogged;
+      const visitCookie = req.cookies.visitLogged;
 
     if (!visitCookie) {
       // Only log the visit if the cookie is not present

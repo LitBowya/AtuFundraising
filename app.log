@@ -2741,3 +2741,150 @@
 2024-08-14 18:26:32 [ERROR]: Error caught by errorHandler:
 2024-08-14 18:35:18 [ERROR]: Error caught by errorHandler:
 2024-08-14 18:37:21 [ERROR]: Error caught by errorHandler:
+2024-05-15 20:02:18 [DEBUG]: Attempting login for email: honorablepharaoh819@gmail.com
+2024-05-15 20:02:18 [INFO]: User honorablepharaoh819@gmail.com logged in successfully
+2024-05-15 20:03:33 [DEBUG]: Register user route hit
+2024-05-15 20:03:33 [DEBUG]: Filtering file: Default_A_modern_clean_and_professional_fundraising_page_websi_3.jpg
+2024-05-15 20:03:33 [DEBUG]: File type is valid
+2024-05-15 20:03:33 [DEBUG]: Generated filename: profilePicture-1715803413558.jpg
+2024-05-15 20:03:33 [DEBUG]: Received registration data for email: nathan@gmail.com
+2024-05-15 20:03:33 [DEBUG]: User registered successfully: nathan@gmail.com
+2024-05-15 20:04:52 [DEBUG]: Attempting login for email: nathan@gmail.com
+2024-05-15 20:04:52 [INFO]: User nathan@gmail.com logged in successfully
+2024-05-15 20:05:07 [DEBUG]: Starting createDonation function
+2024-05-15 20:05:07 [DEBUG]: Received request: projectId=66b9003639d6761c013dbec4, amount=10000
+2024-05-15 20:05:07 [DEBUG]: User found: nathan@gmail.com
+2024-05-15 20:05:07 [DEBUG]: Project found: AI-Driven Healthcare Solutions
+2024-05-15 20:05:07 [DEBUG]: Creating a one-time donation
+2024-05-15 20:05:08 [ERROR]: Request error: certificate is not yet valid
+2024-05-15 20:05:47 [DEBUG]: Starting createDonation function
+2024-05-15 20:05:47 [DEBUG]: Received request: projectId=66b9003639d6761c013dbec4, amount=444
+2024-05-15 20:05:47 [DEBUG]: User found: nathan@gmail.com
+2024-05-15 20:05:47 [DEBUG]: Project found: AI-Driven Healthcare Solutions
+2024-05-15 20:05:47 [DEBUG]: Creating a one-time donation
+2024-05-15 20:05:47 [ERROR]: Request error: certificate is not yet valid
+2024-05-15 20:06:11 [DEBUG]: Starting createDonation function
+2024-05-15 20:06:11 [DEBUG]: Received request: projectId=66b9003639d6761c013dbec4, amount=444
+2024-05-15 20:06:11 [DEBUG]: User found: nathan@gmail.com
+2024-05-15 20:06:11 [DEBUG]: Project found: AI-Driven Healthcare Solutions
+2024-05-15 20:06:11 [DEBUG]: Creating a one-time donation
+2024-05-15 20:06:11 [ERROR]: Request error: certificate is not yet valid
+2024-08-14 21:06:49 [DEBUG]: Attempting login for email: honorablepharaoh819@gmail.com
+2024-08-14 21:06:49 [INFO]: User honorablepharaoh819@gmail.com logged in successfully
+2024-08-14 21:07:07 [DEBUG]: Starting createDonation function
+2024-08-14 21:07:07 [DEBUG]: Received request: projectId=66b9003639d6761c013dbec4, amount=1222
+2024-08-14 21:07:07 [DEBUG]: User found: honorablepharaoh819@gmail.com
+2024-08-14 21:07:07 [DEBUG]: Project found: AI-Driven Healthcare Solutions
+2024-08-14 21:07:07 [DEBUG]: Creating a one-time donation
+2024-08-14 21:07:15 [DEBUG]: Starting createDonation function
+2024-08-14 21:07:15 [DEBUG]: Received request: projectId=66b9003639d6761c013dbec4, amount=1222
+2024-08-14 21:07:15 [DEBUG]: User found: honorablepharaoh819@gmail.com
+2024-08-14 21:07:15 [DEBUG]: Project found: AI-Driven Healthcare Solutions
+2024-08-14 21:07:15 [DEBUG]: Creating a one-time donation
+2024-08-14 21:07:17 [ERROR]: Request error: Client network socket disconnected before secure TLS connection was established
+2024-08-14 21:07:22 [ERROR]: Request error: Client network socket disconnected before secure TLS connection was established
+2024-08-15 05:47:26 [ERROR]: Error caught by errorHandler:
+2024-08-15 05:47:26 [ERROR]: Error caught by errorHandler:
+2024-08-15 06:20:57 [DEBUG]: Filtering file: Default_A_modern_clean_and_professional_fundraising_page_websi_0.jpg
+2024-08-15 06:20:57 [DEBUG]: File type is valid
+2024-08-15 06:20:57 [DEBUG]: Generated filename: images-1723702857293.jpg
+2024-08-15 06:20:57 [DEBUG]: Filtering file: Default_A_modern_clean_and_professional_fundraising_page_websi_1.jpg
+2024-08-15 06:20:57 [DEBUG]: File type is valid
+2024-08-15 06:20:57 [DEBUG]: Generated filename: images-1723702857459.jpg
+2024-08-15 06:20:57 [DEBUG]: Filtering file: atuschoolgrounds.jpg
+2024-08-15 06:20:57 [DEBUG]: File type is valid
+2024-08-15 06:20:57 [DEBUG]: Generated filename: images-1723702857478.jpg
+2024-08-15 06:20:57 [INFO]: Project created successfully:
+2024-08-15 06:21:06 [INFO]: Project with ID 66bd9e4943e0ef626a675511 deleted successfully
+2024-08-15 06:23:47 [DEBUG]: Filtering file: Default_A_modern_clean_and_professional_fundraising_page_websi_2.jpg
+2024-08-15 06:23:47 [DEBUG]: File type is valid
+2024-08-15 06:23:47 [DEBUG]: Generated filename: images-1723703027463.jpg
+2024-08-15 06:23:47 [DEBUG]: Filtering file: Default_A_modern_clean_and_professional_fundraising_page_websi_0.jpg
+2024-08-15 06:23:47 [DEBUG]: File type is valid
+2024-08-15 06:23:47 [DEBUG]: Generated filename: images-1723703027482.jpg
+2024-08-15 06:23:47 [INFO]: Event zzzzzzzzzz created successfully
+2024-08-15 06:23:53 [INFO]: Event zzzzzzzzzz deleted successfully
+2024-08-15 06:26:24 [DEBUG]: Filtering file: Default_A_crisp_white_background_with_assorted_colorful_shapes_0.jpg
+2024-08-15 06:26:24 [DEBUG]: File type is valid
+2024-08-15 06:26:24 [DEBUG]: Generated filename: images-1723703184320.jpg
+2024-08-15 06:26:24 [DEBUG]: Filtering file: Default_A_modern_clean_and_professional_fundraising_page_websi_3.jpg
+2024-08-15 06:26:24 [DEBUG]: File type is valid
+2024-08-15 06:26:24 [DEBUG]: Generated filename: images-1723703184349.jpg
+2024-08-15 06:26:24 [INFO]: Project created successfully:
+2024-08-15 06:27:38 [INFO]: Project with ID 66bd9f907a80930328f577a7 deleted successfully
+2024-08-15 07:20:51 [DEBUG]: Filtering file: Default_A_crisp_white_background_with_assorted_colorful_shapes_0.jpg
+2024-08-15 07:20:51 [DEBUG]: File type is valid
+2024-08-15 07:20:51 [DEBUG]: Generated filename: images-1723706451961.jpg
+2024-08-15 07:20:52 [INFO]: Project created successfully:
+2024-08-15 07:20:52 [ERROR]: Error creating project: savedProject is not defined
+2024-08-15 07:21:18 [DEBUG]: Filtering file: Default_A_crisp_white_background_with_assorted_colorful_shapes_0.jpg
+2024-08-15 07:21:18 [DEBUG]: File type is valid
+2024-08-15 07:21:18 [DEBUG]: Generated filename: images-1723706478102.jpg
+2024-08-15 07:21:18 [INFO]: Project created successfully:
+2024-08-15 07:21:27 [INFO]: Project with ID 66bdac5430c7e9e73a2b481a deleted successfully
+2024-08-15 07:24:53 [INFO]: Project with ID 66bdac6ec072b6d4919afa9a deleted successfully
+2024-08-15 07:27:01 [DEBUG]: Filtering file: LimeWire AI Studio Asset.png
+2024-08-15 07:27:01 [DEBUG]: File type is valid
+2024-08-15 07:27:01 [DEBUG]: Generated filename: images-1723706821992.png
+2024-08-15 07:27:02 [DEBUG]: Filtering file: atulogo-removebg-preview.png
+2024-08-15 07:27:02 [DEBUG]: File type is valid
+2024-08-15 07:27:02 [DEBUG]: Generated filename: images-1723706822061.png
+2024-08-15 07:27:02 [INFO]: Project created successfully:
+2024-08-15 07:27:08 [INFO]: Project with ID 66bdadc6c941b2f742a58604 deleted successfully
+2024-08-15 07:30:24 [DEBUG]: Filtering file: atulogo-removebg-preview.png
+2024-08-15 07:30:24 [DEBUG]: File type is valid
+2024-08-15 07:30:24 [DEBUG]: Generated filename: images-1723707024660.png
+2024-08-15 07:30:24 [INFO]: Project created successfully:
+2024-08-15 07:30:32 [INFO]: Project with ID 66bdae9050846a6c2e2efee8 deleted successfully
+2024-08-15 07:32:08 [DEBUG]: Filtering file: atulogo-removebg-preview.png
+2024-08-15 07:32:08 [DEBUG]: File type is valid
+2024-08-15 07:32:08 [DEBUG]: Generated filename: images-1723707128918.png
+2024-08-15 07:32:08 [INFO]: Project created successfully:
+2024-08-15 07:32:15 [INFO]: Project with ID 66bdaef86b9b703b4452e547 deleted successfully
+2024-08-15 07:45:24 [DEBUG]: Register user route hit
+2024-08-15 07:45:24 [DEBUG]: Filtering file: 17-short-specializations-certificate-agbaga-benjamin.png
+2024-08-15 07:45:24 [DEBUG]: File type is valid
+2024-08-15 07:45:24 [DEBUG]: Generated filename: profilePicture-1723707924394.png
+2024-08-15 07:45:24 [DEBUG]: Received registration data for email: hello@gmail.com
+2024-08-15 07:45:24 [DEBUG]: User registered successfully: hello@gmail.com
+2024-08-15 07:45:41 [DEBUG]: Attempting login for email: hello@gmail.com
+2024-08-15 07:45:41 [INFO]: User hello@gmail.com logged in successfully
+2024-08-15 07:46:26 [DEBUG]: Starting createDonation function
+2024-08-15 07:46:26 [DEBUG]: Received request: projectId=66b9003639d6761c013dbec4, amount=2555
+2024-08-15 07:46:26 [DEBUG]: User found: hello@gmail.com
+2024-08-15 07:46:26 [DEBUG]: Project found: AI-Driven Healthcare Solutions
+2024-08-15 07:46:26 [DEBUG]: Creating a one-time donation
+2024-08-15 07:46:28 [DEBUG]: Payment initialized successfully: reference=yz1pb44tjg
+2024-08-15 07:46:29 [ERROR]: Error caught by errorHandler:
+2024-08-15 07:46:29 [ERROR]: Error caught by errorHandler:
+2024-08-15 07:48:34 [DEBUG]: Attempting login for email: honorablepharaoh819@gmail.com
+2024-08-15 07:48:34 [INFO]: User honorablepharaoh819@gmail.com logged in successfully
+2024-08-15 07:49:51 [DEBUG]: Filtering file: LimeWire AI Studio Asset.png
+2024-08-15 07:49:51 [DEBUG]: File type is valid
+2024-08-15 07:49:51 [DEBUG]: Generated filename: images-1723708191316.png
+2024-08-15 07:49:51 [DEBUG]: Filtering file: atulogo-removebg-preview.png
+2024-08-15 07:49:51 [DEBUG]: File type is valid
+2024-08-15 07:49:51 [DEBUG]: Generated filename: images-1723708191382.png
+2024-08-15 07:49:51 [DEBUG]: Filtering file: Default_A_crisp_white_background_with_assorted_colorful_shapes_0.jpg
+2024-08-15 07:49:51 [DEBUG]: File type is valid
+2024-08-15 07:49:51 [DEBUG]: Generated filename: images-1723708191385.jpg
+2024-08-15 07:49:51 [INFO]: Project created successfully:
+2024-08-15 07:50:11 [INFO]: Project with ID 66bdb31f36e26b8d54489f32 deleted successfully
+2024-08-15 07:51:58 [DEBUG]: Filtering file: Default_A_crisp_white_background_with_assorted_colorful_shapes_0.jpg
+2024-08-15 07:51:58 [DEBUG]: File type is valid
+2024-08-15 07:51:58 [DEBUG]: Generated filename: images-1723708318527.jpg
+2024-08-15 07:51:58 [INFO]: Project created successfully:
+2024-08-15 07:53:58 [INFO]: Project with ID 66bdb39e36e26b8d54489f47 deleted successfully
+2024-08-15 08:02:44 [DEBUG]: Filtering file: 17-short-specializations-certificate-agbaga-benjamin.png
+2024-08-15 08:02:44 [DEBUG]: File type is valid
+2024-08-15 08:02:44 [DEBUG]: Generated filename: images-1723708964282.png
+2024-08-15 08:02:44 [DEBUG]: Filtering file: LimeWire AI Studio Asset.png
+2024-08-15 08:02:44 [DEBUG]: File type is valid
+2024-08-15 08:02:44 [DEBUG]: Generated filename: images-1723708964290.png
+2024-08-15 08:02:44 [DEBUG]: Filtering file: atulogo-removebg-preview.png
+2024-08-15 08:02:44 [DEBUG]: File type is valid
+2024-08-15 08:02:44 [DEBUG]: Generated filename: images-1723708964331.png
+2024-08-15 08:02:44 [INFO]: Project created successfully:
+2024-08-15 08:02:51 [INFO]: Project with ID 66bdb624494ee96b9bf1dfc2 deleted successfully
+2024-08-15 08:06:34 [DEBUG]: Attempting login for email: honorablepharaoh819@gmail.com
+2024-08-15 08:06:34 [INFO]: User honorablepharaoh819@gmail.com logged in successfully

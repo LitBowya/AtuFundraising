@@ -57,20 +57,6 @@ const registerUser = asyncHandler(async (req, res) => {
     if (newUser) {
       logger.debug(`User registered successfully: ${newUser.email}`);
 
-      res.status(201).json({
-        message: "Registered user successfully",
-        data: {
-          _id: newUser._id,
-          name: newUser.name,
-          username: newUser.username,
-          email: newUser.email,
-          profilePicture: newUser.profilePicture,
-          isAdmin: newUser.isAdmin,
-          isAlumni: newUser.isAlumni,
-          alumniDetails: newUser.isAlumni ? newUser.alumniDetails : null,
-        },
-      });
-
       return res.redirect("/login");
     } else {
       logger.error("Invalid user data");

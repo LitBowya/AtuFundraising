@@ -174,7 +174,9 @@ const deleteProject = asyncHandler(async (req, res) => {
     }
 
     logger.info(`Project with ID ${projectId} deleted successfully`);
-    res.status(200).json({ message: "Project deleted successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Project deleted successfully" });
   } catch (error) {
     logger.error(`Error deleting project with ID ${projectId}:`, error);
     res.status(500).json({ message: "Error deleting project" });

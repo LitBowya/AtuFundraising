@@ -12,16 +12,6 @@
       background-color: gray !important;
     }
 
-    .edit-project {
-      background-color: rgb(54, 162, 235);
-      padding: 4px 8px;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      text-decoration: none;
-      margin: 0 4px;
-    }
-
     .delete-project {
       padding: 4px 8px;
       color: white;
@@ -60,10 +50,7 @@
             <td>GHS <%= project.budget %></td>
             <td><%= project.faculty %></td>
             <td><%= project.department %></td>
-            <td class="d-flex g-2 align-items-center">
-              <a href="#" class="edit-project" data-id="<%= project._id %>"
-                >Edit</a
-              >
+            <td>
               <a href="#" class="delete-project" data-id="<%= project._id %>"
                 >Delete</a
               >

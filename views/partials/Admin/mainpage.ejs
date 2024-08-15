@@ -1,38 +1,45 @@
 <div class="content-wrapper">
   <div class="content-header">
-    <div class="container-fluid">
+    <div class="main-content">
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0">Dashboard</h1>
         </div>
       </div>
 
-      <h2>Summary</h2>
       <div class="parent">
         <!-- Top row with 4 items -->
         <div class="summary-item div1">
-          <i class="fas fa-project-diagram"></i>
+          <div class="icon icon1">
+            <i class="fas fa-project-diagram fa-xl"></i>
+          </div>
           <div class="summary-info">
             <p>Total Projects</p>
             <span><%= projects ? projects.length : 0 %></span>
           </div>
         </div>
         <div class="summary-item div2">
-          <i class="fas fa-users"></i>
+          <div class="icon icon2">
+            <i class="fas fa-users fa-xl"></i>
+          </div>
           <div class="summary-info">
             <p>Total Users</p>
             <span><%= users ? users.length : 0 %></span>
           </div>
         </div>
         <div class="summary-item div3">
-          <i class="fas fa-donate"></i>
+          <div class="icon icon3">
+            <i class="fas fa-donate fa-xl"></i>
+          </div>
           <div class="summary-info">
             <p>Total Donations</p>
             <span><%= donations ? donations.length : 0 %></span>
           </div>
         </div>
         <div class="summary-item div4">
-          <i class="fas fa-calendar-alt"></i>
+          <div class="icon icon4">
+            <i class="fas fa-calendar-alt fa-xl"></i>
+          </div>
           <div class="summary-info">
             <p>Total Events</p>
             <span><%= events ? events.length : 0 %></span>
@@ -41,32 +48,89 @@
 
         <!-- Bottom row with 3 items -->
         <div class="summary-item div5">
-          <i class="fas fa-user-graduate"></i>
+          <div class="icon icon5">
+            <i class="fas fa-user-graduate fa-xl"></i>
+          </div>
           <div class="summary-info">
             <p>Total Alumni</p>
             <span><%= alumni ? alumni.length : 0 %></span>
           </div>
         </div>
         <div class="summary-item div6">
-          <i class="fas fa-user"></i>
+          <div class="icon icon6">
+            <i class="fas fa-user fa-xl"></i>
+          </div>
           <div class="summary-info">
             <p>Total Non-Alumni</p>
             <span><%= nonAlumni ? nonAlumni.length : 0 %></span>
           </div>
         </div>
         <div class="summary-item div7">
-          <i class="fas fa-dollar-sign"></i>
+          <div class="icon icon7">
+            <i class="fas fa-dollar-sign fa-xl"></i>
+          </div>
           <div class="summary-info">
             <p>Total Donations Amount</p>
-            <span><%= totalDonationAmount %></span>
+            <span>GHS <%= totalDonationAmount %></span>
           </div>
         </div>
       </div>
 
-      <!-- Bar chart canvas -->
-      <div class="chart-container row">
-        <canvas id="donationChart" class="col-md-6"></canvas>
-        <canvas id="visitsChart" class="col-md-6"></canvas>
+      <div class="chart-container">
+        <div class="donation">
+          <div class="header h4">Donations</div>
+          <canvas id="donationChart"></canvas>
+        </div>
+        <div class="visits">
+          <div class="header h4">Visits</div>
+          <canvas id="visitsChart" class="col-md-6"></canvas>
+        </div>
+      </div>
+
+      <div class="donors-events mt-4">
+        <div class="latestEvents">
+          <div class="header h4">Latest Events</div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Event Name</th>
+                <th>Date</th>
+                <th>Created At</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% latestEvents.slice(0, 4).forEach(event => { %>
+              <tr>
+                <td><%= event.title %></td>
+                <td><%= new Date(event.date).toLocaleDateString() %></td>
+                <td><%= new Date(event.createdAt).toLocaleString() %></td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="donors">
+          <div class="header h4">Top Donors</div>
+          <div class="">
+            <% topDonors.forEach(donor => { %>
+            <div class="">
+              <div class="">
+                <div class="card-body">
+                  <img src="<%= donor.user.profilePicture %>" alt="" />
+                  <div class="card-foot">
+                    <h5 class="card-title"><%= donor.user.name %></h5>
+                    <p class="card-text">
+                      <strong>Total Donations:</strong> $<%= donor.totalDonation
+                      %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+        </div>
       </div>
     </div>
   </div>

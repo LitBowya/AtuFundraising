@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const ctx = document.getElementById("visitsChart").getContext("2d");
 
         new Chart(ctx, {
-          type: "bar",
+          type: "line", // Change the type to "line"
           data: {
             labels: labels, // Month and Year labels
             datasets: [
@@ -174,12 +174,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 label: "Number of Visits",
                 data: visitCounts,
                 backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)",
-                borderWidth: 1,
+                borderColor: "#15a837",
+                borderWidth: 2,
+                fill: true, // To make it a clean line without filling
+                tension: 0.1, // Controls the smoothness of the line
               },
             ],
           },
           options: {
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
               y: {
                 beginAtZero: true,
@@ -195,11 +199,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
               },
             },
+            plugins: {
+              legend: {
+                position: "top",
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (tooltipItem) {
+                    return `${tooltipItem.label}: ${tooltipItem.raw} visits`;
+                  },
+                },
+              },
+            },
           },
         });
       })
       .catch((error) => console.error("Error fetching visit data:", error));
   }
+
 
   /**
    * Function to initialize the search functionality.
@@ -223,18 +240,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function initializeEventAction() {
-    document.querySelectorAll(".edit").forEach((button) => {
-      button.addEventListener("click", function (event) {
-        event.preventDefault();
-        const eventId = this.getAttribute("data-id");
-        fetch(`/events/${eventId}/edit`)
-          .then((response) => response.text())
-          .then((html) => {
-            createEventSection.innerHTML = html;
-          })
-          .catch((error) => console.error("Error loading edit form:", error));
-      });
-    });
 
     document.querySelectorAll(".delete").forEach((button) => {
       button.addEventListener("click", function (event) {
@@ -261,42 +266,33 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function initializeProjectAction() {
-    document.querySelectorAll(".edit-project").forEach((button) => {
-      button.addEventListener("click", function (event) {
-        event.preventDefault();
-        const projectId = this.getAttribute("data-id");
-        fetch(`/projects/${projectId}/edit`)
-          .then((response) => response.text())
-          .then((html) => {
-            createEventSection.innerHTML = html;
-          })
-          .catch((error) => console.error("Error loading edit form:", error));
-      });
-    });
-
     document.querySelectorAll(".delete-project").forEach((button) => {
       button.addEventListener("click", function (event) {
         event.preventDefault();
         const projectId = this.getAttribute("data-id");
-        if (confirm("Are you sure you want to delete this event?")) {
+        if (confirm("Are you sure you want to delete this project?")) {
           fetch(`/projects/${projectId}/delete`, {
             method: "DELETE",
           })
             .then((response) => response.json())
-            .then((data) => {
+              .then((data) => {
+                console.log('This is the data',data)
               if (data.success) {
                 // Remove the row from the table
                 this.closest("tr").remove();
-                alert("Event deleted successfully.");
+                alert("Project deleted successfully.");
               } else {
-                alert("Error deleting event.");
+                alert("Error deleting project.");
               }
             })
-            .catch((error) => console.error("Error deleting event:", error));
+            .catch((error) => console.error("Error deleting project:", error));
         }
       });
     });
   }
+
+
+
 
   /**
    * Set up the sidebar click event to load content dynamically.
@@ -308,7 +304,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (target) {
         event.preventDefault();
         const url = target.getAttribute("data-url");
-        console.log("Loading content from URL:", url);
         loadContent(url);
       }
     });
