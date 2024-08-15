@@ -43,7 +43,8 @@
         word-wrap: wrap;
         font-family: "Poppins", sans-serif;
         color: var(--primary-yellow);
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5), -1px -1px 3px rgba(255, 255, 255, 0.7);
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5),
+          -1px -1px 3px rgba(255, 255, 255, 0.7);
       }
 
       p {
@@ -55,9 +56,9 @@
         word-wrap: wrap;
         font-family: "Poppins", sans-serif;
 
-        span{
-            text-decoration: underline;
-            font-weight: 600;
+        span {
+          text-decoration: underline;
+          font-weight: 600;
         }
       }
 
@@ -174,4 +175,20 @@
       }
     }
   }
+}
+
+.loader {
+  position: fixed;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly more opaque */
+  width: 100%;
+  height: 100%;
+  display: none; /* Hidden by default */
+  justify-content: center;
+  align-items: center;
+}
+
+.loader .spinner-border {
+  width: 3rem;
+  height: 3rem;
 }

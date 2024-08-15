@@ -19,91 +19,91 @@ function redirectToLogin() {
   window.location.href = "/login";
 }
 
+// Function to show the loader
+function showLoader() {
+  document.getElementById("loader").style.display = "flex";
+}
+
+// Function to hide the loader
+function hideLoader() {
+  document.getElementById("loader").style.display = "none";
+}
+
 // Event listener for the donate button
-document
-  .getElementById("donateButton")
-  .addEventListener("click", async function (event) {
-    const authenticated = await isAuthenticated();
+document.getElementById("donateButton").addEventListener("click", async function (event) {
+  const authenticated = await isAuthenticated();
 
-    if (!authenticated) {
-        event.preventDefault();
-        redirectToLogin();
-    }
-  });
-
-document
-  .getElementById("donationForm")
-  .addEventListener("submit", async function (event) {
+  if (!authenticated) {
     event.preventDefault();
+    redirectToLogin();
+  }
+});
 
-    const formData = new FormData(this);
-    const data = {
-      amount: formData.get("amount"),
-      projectId: formData.get("projectId"),
-    };
+document.getElementById("donationForm").addEventListener("submit", async function (event) {
+  event.preventDefault();
 
-    try {
-      const response = await axios.post(
-        `/donations/donate/${data.projectId}`,
-        data
-      );
+  showLoader(); // Show loader before processing
 
-      if (response.status === 200) {
-        // Save the payment reference in localStorage
-        localStorage.setItem("paymentReference", response.data.reference);
-        localStorage.setItem("amount paid", data.amount); // Store amount for verification
-        localStorage.setItem("project id", data.projectId); // Store project ID for verification
-        window.location.href = response.data.paymentUrl;
-      } else {
-        console.log(response.data.message);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      console.log("An error occurred while processing your donation.");
-    } finally {
-      // Hide loader after processing
-      document.getElementById("loader").style.display = "none";
+  const formData = new FormData(this);
+  const data = {
+    amount: formData.get("amount"),
+    projectId: formData.get("projectId"),
+  };
+
+  try {
+    const response = await axios.post(`/donations/donate/${data.projectId}`, data);
+
+    if (response.status === 200) {
+      // Save the payment reference in localStorage
+      localStorage.setItem("paymentReference", response.data.reference);
+      localStorage.setItem("amount paid", data.amount); // Store amount for verification
+      localStorage.setItem("project id", data.projectId); // Store project ID for verification
+      window.location.href = response.data.paymentUrl;
+    } else {
+      console.log(response.data.message);
     }
-  });
+  } catch (error) {
+    console.error("Error:", error);
+    console.log("An error occurred while processing your donation.");
+  } finally {
+    hideLoader(); // Hide loader after processing
+  }
+});
 
-document
-  .getElementById("verifyForm")
-  .addEventListener("submit", async function (event) {
-    event.preventDefault();
+document.getElementById("verifyForm").addEventListener("submit", async function (event) {
+  event.preventDefault();
 
-    // Check if the user is authenticated
-    if (!isAuthenticated()) {
-      redirectToLogin();
-      return;
+  // Check if the user is authenticated
+  if (!await isAuthenticated()) {
+    redirectToLogin();
+    return;
+  }
+
+  showLoader(); // Show loader before processing
+
+  const formData = new FormData(this);
+  const reference = formData.get("reference");
+
+  try {
+    const response = await axios.get(`/donations/verify/${reference}`);
+
+    if (response.status === 200) {
+      alert(response.data.message);
+      // Optionally clear localStorage after successful verification
+      localStorage.removeItem("paymentReference");
+      localStorage.removeItem("amount paid");
+      localStorage.removeItem("project id");
+      window.location.href = window.location.href;
+    } else {
+      console.log(response.data.message);
     }
-
-    const formData = new FormData(this);
-    const reference = formData.get("reference");
-
-    // Show loader
-    document.getElementById("loader").style.display = "flex";
-
-    try {
-      const response = await axios.get(`/donations/verify/${reference}`);
-
-      if (response.status === 200) {
-        alert(response.data.message);
-        // Optionally clear localStorage after successful verification
-        localStorage.removeItem("paymentReference");
-        localStorage.removeItem("amount paid");
-        localStorage.removeItem("project id");
-        window.location.href = window.location.href;
-      } else {
-        console.log(response.data.message);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      console.log("An error occurred while verifying your donation.");
-    } finally {
-      // Hide loader after processing
-      document.getElementById("loader").style.display = "none";
-    }
-  });
+  } catch (error) {
+    console.error("Error:", error);
+    console.log("An error occurred while verifying your donation.");
+  } finally {
+    hideLoader(); // Hide loader after processing
+  }
+});
 
 // Function to pre-fill reference field with value from localStorage
 function prefillReference() {

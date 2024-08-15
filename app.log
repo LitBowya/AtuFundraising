@@ -2888,3 +2888,16 @@
 2024-08-15 08:02:51 [INFO]: Project with ID 66bdb624494ee96b9bf1dfc2 deleted successfully
 2024-08-15 08:06:34 [DEBUG]: Attempting login for email: honorablepharaoh819@gmail.com
 2024-08-15 08:06:34 [INFO]: User honorablepharaoh819@gmail.com logged in successfully
+2024-08-15 08:15:18 [DEBUG]: Attempting login for email: honorablepharaoh819@gmail.com
+2024-08-15 08:15:18 [INFO]: User honorablepharaoh819@gmail.com logged in successfully
+2024-08-15 08:15:30 [ERROR]: Error caught by errorHandler:
+2024-08-15 08:27:37 [ERROR]: Error caught by errorHandler:
+2024-08-15 09:17:06 [ERROR]: Error caught by errorHandler:
+2024-08-15 09:17:06 [ERROR]: Error caught by errorHandler:
+2024-08-15 09:17:10 [ERROR]: Error caught by errorHandler:
+2024-08-15 09:25:53 [DEBUG]: Starting createDonation function
+2024-08-15 09:25:53 [DEBUG]: Received request: projectId=66b9003639d6761c013dbec4, amount=1
+2024-08-15 09:25:53 [DEBUG]: User found: honorablepharaoh819@gmail.com
+2024-08-15 09:25:53 [DEBUG]: Project found: AI-Driven Healthcare Solutions
+2024-08-15 09:25:53 [DEBUG]: Creating a one-time donation
+2024-08-15 09:25:54 [DEBUG]: Payment initialized successfully: reference=xhq63cf33e

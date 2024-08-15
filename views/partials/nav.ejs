@@ -71,13 +71,11 @@
         <a href="/events" class="nav__link-list">Events</a>
         <a href="/projects" class="nav__link-list">Projects</a>
         <a href="/contact-us" class="nav__link-list">Contact Us</a>
-        <% const titlesToShow=['Project Details', 'Profile Page', 'Event Details' ]; %> <% if
-        (!titlesToShow.includes(title)) { %>
+        <% const titlesToShow = ['Homepage','Projects', 'Contact Us', 'Project Details', 'Profile Page', 'Event Details', "About Us", "Events Page", ];
+        %> <% const currentTitle = title; %> <% if
+        (titlesToShow.includes(currentTitle)) { %>
         <span class="nav__register nav__link-list" id="navRegister">
           <!-- Placeholder for dynamic content -->
-          <% titlesToShow.forEach((item)=> { %>
-          <p><%= item %></p>
-          <% }); %>
         </span>
         <% } %>
       </div>
@@ -96,9 +94,32 @@
           const data = response.data.user;
           const navRegister = document.getElementById("navRegister");
 
-          if (data && data.profilePicture) {
-            const profilePicture = `<img src="${data.profilePicture}" alt="Profile" class="nav__profile-picture" id="profile-picture" />`;
+          // Define mapping for titles and image paths
+          const imageNameMap = {
+            Homepage: `/${data.profilePicture}`,
+            "Project Details": `/${data.profilePicture}`,
+            "Profile Page": `/${data.profilePicture}`,
+            "Event Details": `/${data.profilePicture}`,
+            Projects: `/${data.profilePicture}`,
+            "Contact Us": `/${data.profilePicture}`,
+            "Project Details": `/${data.profilePicture}`,
+            "Profile Page": `/${data.profilePicture}`,
+            "Event Details": `/${data.profilePicture}`,
+            "About Us": `/${data.profilePicture}`,
+            "Events Page": `/${data.profilePicture}`,
+          };
+
+          const currentTitle = "<%= currentTitle %>";
+          console.log("Current Title is", currentTitle);
+
+          // Use the mapped image or nothing if the title is not in the map
+          const imagePath = imageNameMap[currentTitle] || "";
+          console.log("Image Path:", imagePath);
+
+          if (data && data.profilePicture && imagePath) {
+            const profilePicture = `<img src="${imagePath}" alt="Profile" class="nav__profile-picture" id="profile-picture" />`;
             navRegister.innerHTML = profilePicture;
+            console.log("This is the profile picture", profilePicture);
 
             // Dropdown menu items
             const dropdownMenu = `
@@ -137,7 +158,7 @@
                     },
                   }
                 )
-                .then((response) => {
+                .then(() => {
                   window.location.href = "/login";
                 })
                 .catch((error) => {
